@@ -1,12 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import './index.scss';
+import Root from './containers/Root';
+import { configureStore, history } from './store/configStore';
+
 import reportWebVitals from './reportWebVitals';
+
+const store = configureStore();
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Root store={store} history={history} />
   </React.StrictMode>,
   document.getElementById('root')
 );

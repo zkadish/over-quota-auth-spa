@@ -1,0 +1,88 @@
+@import '../../styles/variables.scss';
+
+.registration {
+  // border: 1px solid red;
+  
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  // align-items: center;
+  width: 100vw;
+  height: calc(100vh - 40px);
+  background-color: $BACKGROUND_PRIMARY_LIGHT;
+
+  &__logo {
+    padding: 24px 0 8px;
+    font-size: 32px;
+    font-weight: bold;
+    // border: 1px solid green;
+  }
+
+  &__message {
+    & div:nth-child(1) {
+      padding: 0 0 16px 0;
+      font-size: 40px;
+      font-weight: bold;
+      // border: 1px solid red;
+    }
+    & div:nth-child(2) {
+      padding: 0 0 24px 0;
+    }
+    // border: 1px solid green;
+  }
+
+  &__login {
+    max-width: 400px;
+  }
+
+  &__appName {
+    margin: 0 0 16px;
+    font-size: 3rem;
+    font-weight: 500;
+    & :nth-child(2) {
+      font-size: 3.5rem;
+    }
+
+    svg {
+      position: relative;
+      top: 20px;
+      left: -5px;
+      width: 4.5rem;
+      height: 4.5rem;
+    }
+  }
+
+  .login-options {
+    display: flex;
+    justify-content: space-between;
+    // align-content: center;
+    margin: 0 0 24px;
+    font-size: 1rem;
+
+    &__remember-me {
+      display: flex;
+    }
+  }
+
+  .policy-message {
+    text-align: left;
+    font-size: 14px;
+  }
+
+  .signUp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    button {
+      text-transform: inherit;
+      background-color: rgba(255, 255, 255, 0.3);
+    }
+  }
+}
+
+.container a {
+  color: $BLACK;
+}
