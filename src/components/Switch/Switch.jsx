@@ -41,18 +41,17 @@ const CustomSwitch = withStyles(theme => ({
 }))(CoreSwitch);
 
 const Switch = props => {
-  const { className } = props;
-  const [checked, setState] = React.useState(false);
+  const { className, checked, onSwitchChange } = props;
 
   const handleChange = useCallback(() => {
-    setState(!checked);
-  }, [checked]);
+    onSwitchChange();
+  }, [onSwitchChange]);
 
   return (
     <Typography component="div">
       <CustomSwitch
         className={className}
-        checked={checked}
+        checked={!!checked}
         onChange={handleChange}
         value="checkedC"
       />

@@ -1,11 +1,8 @@
-import { Router, Switch, Route } from 'react-router-dom';
+import React from 'react';
 
-import VerifyEmail from '../../components/VerifyEmail';
+const Auth = props => {
+  const { children } = props;
 
-// import logo from './logo.svg';
-import './App.scss';
-
-function App() {
   return (
     <div className="App">
       <header className="App-header">
@@ -13,7 +10,7 @@ function App() {
       </header>
       <main className="App-main">
         <div className="App-content">
-          <VerifyEmail />
+          {children}
         </div>
       </main>
       <footer className="App-footer">
@@ -21,6 +18,6 @@ function App() {
       </footer>
     </div>
   );
-}
+};
 
-export default App;
+export default Auth;

@@ -1,5 +1,8 @@
 const routes = {
-  LOGIN: '/',
+  ROOT: '/',
+  REGISTER_USER: '/register-user',
+  CREATE_PASSWORD: '/create-password',
+  LOGIN: '/login',
   REGISTER: "/register",
   PASSWORD_RESET: "/password-reset",
   APP: "/app",

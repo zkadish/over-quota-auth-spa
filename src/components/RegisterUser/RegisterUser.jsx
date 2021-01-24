@@ -1,10 +1,14 @@
-import { Link } from 'react-router-dom';
+
+import { useState } from 'react';
+// import { Link } from 'react-router-dom';
 import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 import Switch from '../Switch';
-import route from '../../constants/routes';
-import './SubmitEmail.scss';
+import routes from '../../constants/routes';
+import { registerUser } from '../../services/authn';
+
+import './RegisterUser.scss';
 
 const textFieldStyles = makeStyles(() => ({
   root: {
@@ -30,17 +34,37 @@ const switchStyles = makeStyles(() => ({
   }
 }));
 
-const Registration = props => {
-  const { history } = props;
+const RegisterUser = props => {
+  const { setUserData, history } = props;
   const textFieldClasses = textFieldStyles();
   const loginBtnClasses = loginBtnStyles();
   const switchClasses = switchStyles();
 
-  const onClickHandler = () => {
-    history.push(route.APP);
+  const [email, setEmail] = useState('');
+  const [emailLists, setEmailLists] = useState('NEWS_LETTER');
+
+  const onSwitchChange = () => {
+    setEmailLists(emailLists ? '' : 'NEWS_LETTER');
   };
 
-  // console.log(styles);
+  const emailOnChange = e => {
+    setEmail(e.target.value);
+  };
+
+  const onClickHandler = () => {
+    registerUser({ email }).then(res => {
+      const { data, status } = res;
+      debugger
+      if (res.error) throw res;
+      if (status === 200) {
+        setUserData({ email });
+        history.push(routes[data.redirect]);
+      }
+    }).catch(error => {
+      console.log(error)
+      debugger
+    });
+  };
 
   return (
     <div className="container">
@@ -56,6 +80,8 @@ const Registration = props => {
           id="outlined-basic"
           label="Email"
           variant="outlined"
+          value={email}
+          onChange={emailOnChange}
         />
         <Button
           color="primary"
@@ -68,8 +94,8 @@ const Registration = props => {
         </Button>
         <div className="login-options">
           <div className="login-options__remember-me">
-            <Switch className={switchClasses.root} />
-            <div>&nbsp;&nbsp;Its ok to send me email about SkillUp.</div>
+            <Switch className={switchClasses.root} onSwitchChange={onSwitchChange} checked={emailLists} />
+            <div>&nbsp;&nbsp;Its ok to send me the latest news about SkillUp.</div>
           </div>
           {/* <Link to={route.PASSWORD_RESET}>Forgot password?</Link> */}
         </div>
@@ -81,4 +107,4 @@ const Registration = props => {
   )
 }
 
-export default Registration;
+export default RegisterUser;

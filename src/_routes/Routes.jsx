@@ -1,6 +1,5 @@
-import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import route from '../constants/routes.json';
+import route from '../constants/routes';
 import App from '../containers/App';
 // import PasswordReset from '../components/PasswordReset';
 // import Login from '../containers/Login';

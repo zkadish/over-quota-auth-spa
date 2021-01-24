@@ -3,14 +3,15 @@ import { ConnectedRouter } from 'connected-react-router';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import theme from '../../styles/theme';
-import App from '../App';
+import Routes from '../Routes';
+// import App from '../App';
 
 const Root = ({ store, history }) => {
   return (
     <Provider store={store}>
       <ConnectedRouter history={history}>
         <ThemeProvider theme={theme}>
-          <App />
+          <Routes />
         </ThemeProvider>
       </ConnectedRouter>
     </Provider>
