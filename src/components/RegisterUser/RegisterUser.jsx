@@ -41,7 +41,10 @@ const RegisterUser = props => {
   const switchClasses = switchStyles();
 
   const [email, setEmail] = useState('');
+  const [isValid, setIsValid] = useState(false);
   const [emailLists, setEmailLists] = useState('NEWS_LETTER');
+
+  const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/igm;
 
   const onSwitchChange = () => {
     setEmailLists(emailLists ? '' : 'NEWS_LETTER');
@@ -49,20 +52,19 @@ const RegisterUser = props => {
 
   const emailOnChange = e => {
     setEmail(e.target.value);
+    setIsValid(emailRegex.test(e.target.value));
   };
 
   const onClickHandler = () => {
-    registerUser({ email }).then(res => {
+    registerUser({ email, emailLists }).then(res => {
       const { data, status } = res;
-      debugger
       if (res.error) throw res;
       if (status === 200) {
-        setUserData({ email });
+        setUserData(data.user);
         history.push(routes[data.redirect]);
       }
     }).catch(error => {
       console.log(error)
-      debugger
     });
   };
 
@@ -89,6 +91,7 @@ const RegisterUser = props => {
           fullWidth
           variant="contained"
           onClick={onClickHandler}
+          disabled={!isValid}
         >
           Next
         </Button>

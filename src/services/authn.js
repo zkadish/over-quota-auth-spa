@@ -47,7 +47,22 @@ const createPassword = async (reqBody) => {
   }
 }
 
+const login = async (reqBody) => {
+  try {
+    const res = await axios.post(
+      '/api/auth/login',
+      reqBody,
+    );
+
+    return res;
+  } catch (error) {
+    console.log.error(error);
+    return { error };
+  }
+}
+
 export {
   registerUser,
   createPassword,
+  login,
 };

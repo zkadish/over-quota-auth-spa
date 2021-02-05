@@ -171,14 +171,12 @@ const CreatePassword = props => {
   }
 
   const onClickHandler = () => {
-    debugger
     createPassword({
       email: user.email,
       password: values.password,
       confirmPassword: values.confirm,
     }).then(res => {
       const { data, status } = res;
-      debugger
       if (res.error) throw res;
       if (status === 200) {
         setUserData(data.user);
@@ -186,7 +184,6 @@ const CreatePassword = props => {
       }
     }).catch(error => {
       console.log(error)
-      debugger
     });
   };
 
