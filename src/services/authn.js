@@ -56,7 +56,47 @@ const login = async (reqBody) => {
 
     return res;
   } catch (error) {
-    console.log.error(error);
+    console.error(error);
+    return { error };
+  }
+}
+
+const forgotPassword = async (reqBody) => {
+  try {
+    const res = await axios.post(
+      '/api/auth/forgot-password',
+      reqBody,
+    );
+
+    return res;
+  } catch (error) {
+    console.error(error);
+    return { error };
+  }
+}
+
+const validateReset = async (token) => {
+  try {
+    const res = await axios.get(`/api/auth/validate-reset/${token}`);
+
+    return res;
+  } catch (error) {
+    console.error(error);
+    return { error };
+  }
+}
+
+const resetPassword = async (token, reqBody) => {
+  try {
+    const res = await axios.post(
+      `/api/auth/reset-password/${token}`,
+      reqBody,
+    );
+
+    return res;
+  } catch (error) {
+    debugger
+    console.error(error);
     return { error };
   }
 }
@@ -65,4 +105,7 @@ export {
   registerUser,
   createPassword,
   login,
+  forgotPassword,
+  validateReset,
+  resetPassword,
 };

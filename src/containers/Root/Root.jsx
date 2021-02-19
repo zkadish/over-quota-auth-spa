@@ -4,7 +4,6 @@ import { ThemeProvider } from '@material-ui/core/styles';
 
 import theme from '../../styles/theme';
 import Routes from '../Routes';
-// import App from '../App';
 
 const Root = ({ store, history }) => {
   return (

@@ -3,9 +3,8 @@ const routes = {
   REGISTER_USER: '/register-user',
   CREATE_PASSWORD: '/create-password',
   LOGIN: '/login',
-  REGISTER: '/register',
   FORGOT_PASSWORD: '/forgot-password',
-  // PASSWORD_RESET: "/password-reset",
+  RESET_PASSWORD: '/reset-password/:token',
   APP: '/app',
   WELCOME: '/app/welcome',
 }

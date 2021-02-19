@@ -17,17 +17,19 @@ import {
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Bullet from '@material-ui/icons/Lens';
+import AuthLayout from '../../containers/Layout/AuthLayout';
 import routes from '../../constants/routes';
 import { createPassword } from '../../services/authn';
+import { validatePassword } from '../../constants/validators';
 
 const formControlStyles = makeStyles(() => ({
   root: {
     display: 'block',
-    margin: '0 0 24px',
+    margin: '0 0 28px',
   },
   confirm: {
     display: 'block',
-    margin: '0 0 5px',
+    margin: '0 0 9px',
   },
   helperText: {
     height: '19px',
@@ -86,20 +88,9 @@ const requirements = [
   { text: 'At least 1 special character', id: 'special' },
 ];
 
-const validatePassword = password => {
-  const result = {
-    eightChars: false,
-    upLetter: false,
-    lowLetter: false,
-    number: false,
-    special: false,
-  };
-  if (/.{8,}/.test(password)) result.eightChars = true; // eightChars
-  if (/[A-Z]/.test(password)) result.upLetter = true; 
-  if (/[a-z]/.test(password)) result.lowLetter = true;
-  if (/[0-9]/.test(password)) result.number = true;
-  if (/[^A-Za-z0-9]/.test(password)) result.special = true;
-  return result;
+const constants = {
+  title: 'Create a Password...',
+  message: `Please create a strong password.`,
 };
 
 // TODO: offer to create a password witch will be sent to the email they entered
@@ -132,24 +123,31 @@ const CreatePassword = props => {
 
   const input = useRef(null);
 
-  const handleChange = (prop) => (event) => {
-    const { target: { value } } = event;
-    setValues({ ...values, [prop]: value });
-    
-    if (prop === 'password') {
-      const validObj = validatePassword(value);
-      setRequirePassword(validObj);
-      const isPasswordValid = Object.values(validObj).every(bool => bool);
-      setValidated(isPasswordValid);
-    }
-
-    if (prop === 'confirm') {
-      const error = value !== values.password;
+  const confirmPassword = (value, field) => {
+    const error = value !== values[field];
       setErrors({
         ...errors,
         confirm: error,
       });
       setConfirmed(!error);
+  }
+
+  const handleChange = (input) => (event) => {
+    const { target: { value } } = event;
+    setValues({ ...values, [input]: value });
+    
+    if (input === 'password') {
+      const validObj = validatePassword(value);
+      setRequirePassword(validObj);
+      const isPasswordValid = Object.values(validObj).every(bool => bool);
+      setValidated(isPasswordValid);
+      if (value.confirm.length > 0) {
+        confirmPassword(value, 'confirm');
+      }
+    }
+
+    if (input === 'confirm') {
+      confirmPassword(value, 'password');
     }
   };
 
@@ -188,118 +186,113 @@ const CreatePassword = props => {
   };
 
   return (
-    <div className="container">
-      <div className="container__login">
-        <div className="container__logo">SkillUp</div>
-        <div className="container__message">
-          <div>Create a Password...</div>
-          <div>Please create a strong password.</div>
-        </div>
-        <Popper
-          className={popperClasses.root}
-          open={open}
-          anchorEl={input.current}
-          placement="right-start"
-          transition
-          modifiers={{
-            offset: {
-              enabled: true,
-              offset: '0, 8'
-            }
-          }}
-        >
-          {({ TransitionProps }) => (
-            <Fade {...TransitionProps} timeout={350}>
-              <Paper className={popperClasses.paper} elevation={8}>
-                <Typography>Password Requirements...</Typography>
-                {requirements.map((req) => {
-                  return (
-                    <Typography key={req.text}>
-                      <Bullet className={clsx(bulletClasses.root,
-                        { [bulletClasses.validated]: requirePassword[req.id] },
-                        { [bulletClasses.warn]: !requirePassword[req.id] },
-                      )} />
-                      &nbsp;{req.text}
-                    </Typography>
-                  )
-                })}
-              </Paper>
-            </Fade>
-          )}
-        </Popper>
-        <FormControl className={clsx(formControlClasses.root)} variant="outlined">
-          <InputLabel htmlFor="password">Password</InputLabel>
-          <OutlinedInput
-            ref={input}
-            id="password"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.password}
-            onChange={handleChange('password')}
-            onClick={onPasswordClick()}
-            onBlur={onPassWordBlur}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  className={formControlClasses.passwordIcon}
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            }
-            labelWidth={70}
-            fullWidth
-          />
-        </FormControl>
-        <FormControl className={clsx(formControlClasses.confirm, { [formControlClasses.error]: errors.confirm })} variant="outlined">
-          <InputLabel
-            htmlFor="confirm"
-          >Confirm Password</InputLabel>
-          <OutlinedInput
-            id="confirm"
-            type={values.showPassword ? 'text' : 'password'}
-            value={values.confirm}
-            onChange={handleChange('confirm')}
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  className={formControlClasses.passwordIcon}
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            }
-            labelWidth={135}
-            error={errors.confirm}
-            aria-describedby="helper-text"
-            fullWidth
-          />
-          <FormHelperText className={formControlClasses.helperText} id="helper-text">
-            {errors.confirm && 'Passwords must match...'}
-          </FormHelperText>
-        </FormControl>
-        <Button
-          color="primary"
-          className={btnClasses.root}
+    <AuthLayout
+      title={constants.title}
+      message={constants.message}
+      button="Create Password"
+      policy
+    >
+      <FormControl className={clsx(formControlClasses.root)} variant="outlined">
+        <InputLabel htmlFor="password">Password</InputLabel>
+        <OutlinedInput
+          ref={input}
+          id="password"
+          type={values.showPassword ? 'text' : 'password'}
+          value={values.password}
+          onChange={handleChange('password')}
+          onClick={onPasswordClick()}
+          onBlur={onPassWordBlur}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                className={formControlClasses.passwordIcon}
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+              >
+                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          }
+          labelWidth={70}
           fullWidth
-          variant="contained"
-          onClick={onClickHandler}
-          disabled={!validated || !confirmed}
-        >
-          Create Password
-        </Button>
-        <div className="policy-message">
-          By clicking register, you're agreeing to our Terms of Service, Privacy Policy and Cookie Policy.
-        </div>
-      </div>
-    </div>
+        />
+      </FormControl>
+      <FormControl className={clsx(formControlClasses.confirm, { [formControlClasses.error]: errors.confirm })} variant="outlined">
+        <InputLabel
+          htmlFor="confirm"
+        >Confirm Password</InputLabel>
+        <OutlinedInput
+          id="confirm"
+          type={values.showPassword ? 'text' : 'password'}
+          value={values.confirm}
+          onChange={handleChange('confirm')}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                className={formControlClasses.passwordIcon}
+                aria-label="toggle password visibility"
+                onClick={handleClickShowPassword}
+                onMouseDown={handleMouseDownPassword}
+                edge="end"
+              >
+                {values.showPassword ? <Visibility /> : <VisibilityOff />}
+              </IconButton>
+            </InputAdornment>
+          }
+          labelWidth={135}
+          error={errors.confirm}
+          aria-describedby="helper-text"
+          fullWidth
+        />
+        <FormHelperText className={formControlClasses.helperText} id="helper-text">
+          {errors.confirm && 'Passwords must match...'}
+        </FormHelperText>
+      </FormControl>
+      <Button
+        color="primary"
+        className={btnClasses.root}
+        fullWidth
+        variant="contained"
+        onClick={onClickHandler}
+        disabled={!validated || !confirmed}
+      >
+        Create Password
+      </Button>
+      <Popper
+        className={popperClasses.root}
+        open={open}
+        anchorEl={input.current}
+        placement="right-start"
+        transition
+        modifiers={{
+          offset: {
+            enabled: true,
+            offset: '0, 8'
+          }
+        }}
+      >
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350}>
+            <Paper className={popperClasses.paper} elevation={8}>
+              <Typography>Password Requirements...</Typography>
+              {requirements.map((req) => {
+                return (
+                  <Typography key={req.text}>
+                    <Bullet className={clsx(bulletClasses.root,
+                      { [bulletClasses.validated]: requirePassword[req.id] },
+                      { [bulletClasses.warn]: !requirePassword[req.id] },
+                    )} />
+                    &nbsp;{req.text}
+                  </Typography>
+                )
+              })}
+            </Paper>
+          </Fade>
+        )}
+      </Popper>
+    </AuthLayout>
   );
 };
 

@@ -1,8 +1,9 @@
 import { Switch, Route } from 'react-router-dom';
-import Auth from '../Layout/Auth';
+import AuthLayout from '../Layout/AuthLayout';
 import AppLayout from '../Layout/App';
 import RegisterUser from '../../components/RegisterUser';
 import CreatePassword from '../../components/CreatePassword';
+import ResetPassword from '../../components/ResetPassword';
 import Login from '../../components/Login';
 import Welcome from '../../containers/Welcome';
 import ForgotPassword from '../../components/ForgotPassword';
@@ -13,24 +14,19 @@ const Routes = () => {
   return (
     <Switch>
       <Route exact path={[routes.ROOT, routes.REGISTER_USER]}>
-        <Auth>
-          <RegisterUser />
-        </Auth>
+        <RegisterUser />
       </Route>
       <Route exact path={routes.CREATE_PASSWORD}>
-        <Auth>
-          <CreatePassword />
-        </Auth>
+        <CreatePassword />
+      </Route>
+      <Route exact path={routes.RESET_PASSWORD}>
+        <ResetPassword />
       </Route>
       <Route exact path={routes.LOGIN}>
-        <Auth>
-          <Login />
-        </Auth>
+        <Login />
       </Route>
       <Route exact path={routes.FORGOT_PASSWORD}>
-        <Auth>
-          <ForgotPassword />
-        </Auth>
+        <ForgotPassword />
       </Route>
       <Route exact path={[routes.APP, routes.WELCOME]}>
         <AppLayout>
@@ -38,9 +34,9 @@ const Routes = () => {
         </AppLayout>
       </Route>
       <Route exact path="/*">
-        <Auth>
+        <AuthLayout>
           404
-        </Auth>
+        </AuthLayout>
       </Route>
     </Switch>
   );

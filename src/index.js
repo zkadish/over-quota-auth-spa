@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.scss';
 import Root from './containers/Root';
 import { configureStore, history } from './store/configStore';
+import './index.scss';
 
 import reportWebVitals from './reportWebVitals';
 
