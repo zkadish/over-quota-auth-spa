@@ -161,7 +161,7 @@ const ResetPassword = props => {
       setRequirePassword(validObj);
       const isPasswordValid = Object.values(validObj).every(bool => bool);
       setValidated(isPasswordValid);
-      if (value.confirm.length > 0) {
+      if (values.confirm.length > 0) {
         confirmPassword(value, 'confirm');
       }
     }
@@ -189,7 +189,7 @@ const ResetPassword = props => {
     setOpen(false);
   }
 
-  const onClickHandler = () => {
+  const onResetPassword = () => {
     resetPassword(token, {
       password: values.password,
     }).then(res => {
@@ -287,7 +287,7 @@ const ResetPassword = props => {
             className={btnClasses.root}
             fullWidth
             variant="contained"
-            onClick={onClickHandler}
+            onClick={onResetPassword}
             disabled={!validated || !confirmed}
           >
             Reset Password

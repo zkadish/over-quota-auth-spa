@@ -2,9 +2,9 @@
 
 .app-wrapper {
   &__header {
-    // display: flex;
+    display: flex;
+    justify-content: space-between;
     // align-items: center;
-    // justify-content: center;
     height: 64px;
     background-color: $BACKGROUND_PRIMARY_DARK;
     color: white;

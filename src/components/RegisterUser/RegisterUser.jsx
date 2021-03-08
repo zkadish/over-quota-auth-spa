@@ -87,18 +87,18 @@ const RegisterUser = props => {
     setError(false);
   };
 
-  const onClickHandler = () => {
+  const onNext = () => {
     if (!isValid) {
       setError(true);
       return;
     }
 
     setDisabled(true);
-    debugger
-    registerUser({ email, emailLists }).then(res => {
+
+    registerUser({ email: email, emailLists }).then(res => {
       const { data, status } = res;
+
       if (res.error) throw res;
-      debugger
       if (status === 200) {
         setUserData(data.user);
         history.push(routes[data.redirect]);
@@ -135,7 +135,7 @@ const RegisterUser = props => {
         className={loginBtnClasses.root}
         fullWidth
         variant="contained"
-        onClick={onClickHandler}
+        onClick={onNext}
         disabled={disabled}
       >
         Next

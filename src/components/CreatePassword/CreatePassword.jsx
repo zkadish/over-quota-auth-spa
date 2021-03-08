@@ -95,7 +95,7 @@ const constants = {
 
 // TODO: offer to create a password witch will be sent to the email they entered
 const CreatePassword = props => {
-  const { user, setUserData, history } = props;
+  const { user, history } = props;
 
   const formControlClasses = formControlStyles();
   const btnClasses = btnStyles();
@@ -116,6 +116,7 @@ const CreatePassword = props => {
   });
   const [validated, setValidated] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
+  const [disabled, setDisabled] = useState(false);
   const [errors, setErrors] = useState({
     confirm: false
   });
@@ -124,6 +125,7 @@ const CreatePassword = props => {
   const input = useRef(null);
 
   const confirmPassword = (value, field) => {
+    // debugger
     const error = value !== values[field];
       setErrors({
         ...errors,
@@ -137,16 +139,18 @@ const CreatePassword = props => {
     setValues({ ...values, [input]: value });
     
     if (input === 'password') {
+      // TODO: validate on create
       const validObj = validatePassword(value);
       setRequirePassword(validObj);
       const isPasswordValid = Object.values(validObj).every(bool => bool);
       setValidated(isPasswordValid);
-      if (value.confirm.length > 0) {
+      if (values.confirm.length > 0) {
         confirmPassword(value, 'confirm');
       }
     }
 
     if (input === 'confirm') {
+      // TODO: validate on create
       confirmPassword(value, 'password');
     }
   };
@@ -168,7 +172,10 @@ const CreatePassword = props => {
     setOpen(false);
   }
 
-  const onClickHandler = () => {
+  const onCreatePassword = () => {
+
+    setDisabled(true);
+
     createPassword({
       email: user.email,
       password: values.password,
@@ -177,7 +184,7 @@ const CreatePassword = props => {
       const { data, status } = res;
       if (res.error) throw res;
       if (status === 200) {
-        setUserData(data.user);
+        // setUserData(data.user);
         history.push(routes[data.redirect]);
       }
     }).catch(error => {
@@ -255,11 +262,11 @@ const CreatePassword = props => {
         className={btnClasses.root}
         fullWidth
         variant="contained"
-        onClick={onClickHandler}
-        disabled={!validated || !confirmed}
+        onClick={onCreatePassword}
+        disabled={!validated || !confirmed || disabled}
       >
         Create Password
-      </Button>
+      </Button> 
       <Popper
         className={popperClasses.root}
         open={open}

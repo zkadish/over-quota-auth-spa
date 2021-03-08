@@ -61,6 +61,17 @@ const login = async (reqBody) => {
   }
 }
 
+const signOut = async () => {
+  try {
+    const res = await axios.get('api/auth/sign-out');
+
+    return res;
+  } catch (error) {
+    console.error(error);
+    return { error };
+  }
+}
+
 const forgotPassword = async (reqBody) => {
   try {
     const res = await axios.post(
@@ -95,7 +106,18 @@ const resetPassword = async (token, reqBody) => {
 
     return res;
   } catch (error) {
-    debugger
+    console.error(error);
+    return { error };
+  }
+}
+
+const authn = async () => {
+  console.log('get.authn()')
+  try {
+    const res = await axios.get('/api/auth/authn');
+
+    return res;
+  } catch (error) {
     console.error(error);
     return { error };
   }
@@ -108,4 +130,6 @@ export {
   forgotPassword,
   validateReset,
   resetPassword,
+  signOut,
+  authn,
 };

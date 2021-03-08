@@ -157,7 +157,7 @@ const ForgotPassword = () => {
         className={dialogClasses.root}
       >
         <DialogTitle className={dialogClasses.title} id="alert-dialog-title">
-          Email Sent...
+          An Email has been sent to: {email}
         </DialogTitle>
         <DialogContent>
           <DialogContentText className={dialogClasses.content} id="alert-dialog-description">

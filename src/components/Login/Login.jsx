@@ -60,7 +60,7 @@ const constants = {
 };
 
 const Login = props => {
-  const { user, history } = props;
+  const { user, setUserData, history } = props;
 
   const formControlClasses = formControlStyles();
   const btnClasses = btnStyles();
@@ -111,7 +111,6 @@ const Login = props => {
 
   const onClickHandler = () => {
     if (!isValidEmail(email)) {
-      debugger
       setErrors({
         ...errors,
         email: true,
@@ -124,15 +123,15 @@ const Login = props => {
       password,
     }).then(res => {
       const { data, status } = res;
-      debugger
+
       if (res.error) throw res;
       if (status === 200) {
-        // setUserData(data.user);
+        // TODO: after successful login clear cookie so that a new one gets created.
+        setUserData(data.user);
         history.push(routes[data.redirect]);
       }
     }).catch(error => {
       console.log(error);
-      debugger
       setErrors({
         ...errors,
         password: true,

@@ -1,10 +1,10 @@
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux';
+import { bindActionCreators } from 'redux';
 
 import { withRouter } from 'react-router-dom';
 import Login from './Login';
 
-// import { setUserData } from '../../actions/authn';
+import { setUserData } from '../../actions/authn';
 
 const mapStateToProps = state => {
   return {
@@ -12,11 +12,11 @@ const mapStateToProps = state => {
   };
 };
 
-// const mapDispatchToProps = dispatch => {
-//   return bindActionCreators({ setUserData }, dispatch);
-// };
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ setUserData }, dispatch);
+};
 
 export default connect(
   mapStateToProps,
-  // mapDispatchToProps
+  mapDispatchToProps
 )(withRouter(Login));

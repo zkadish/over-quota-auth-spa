@@ -7,6 +7,7 @@ const routes = {
   RESET_PASSWORD: '/reset-password/:token',
   APP: '/app',
   WELCOME: '/app/welcome',
-}
+  USER_PROFILE: '/app/user-profile',
+};
 
 export default routes;
