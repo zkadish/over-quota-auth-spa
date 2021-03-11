@@ -1,6 +1,6 @@
 import { useState, createRef, useRef } from 'react';
 import { IconButton, makeStyles, Menu, MenuItem  } from '@material-ui/core';
-import ChatIcon from '@material-ui/icons/Chat';
+// import ChatIcon from '@material-ui/icons/Chat';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 import routes from '../../../constants/routes';
@@ -39,12 +39,16 @@ const AuthLayout = props => {
   }
 
   return (
-    <div className="app-wrapper">
-      <header className="app-wrapper__header">
-        <IconButton className={iconButtonClasses.root}>
+    <div className="auth-wrapper">
+      <header className="auth-wrapper__header">
+        {/* <IconButton className={iconButtonClasses.root}>
           <ChatIcon />
-        </IconButton>
-        <IconButton ref={accountMenu} className={iconButtonClasses.root} onClick={handleClick}>
+        </IconButton> */}
+        <IconButton
+          ref={accountMenu}
+          className={iconButtonClasses.root}
+          onClick={handleClick}
+        >
           <AccountCircleIcon />
         </IconButton>
         <Menu
@@ -60,7 +64,7 @@ const AuthLayout = props => {
           <MenuItem onClick={handleClose}>Logout</MenuItem> */}
         </Menu>
       </header>
-      <main className="app-wrapper__main">
+      <main className="auth-wrapper__main">
         <div className="auth-form">
           <div className="auth-form__logo">SkillUp</div>
           <div className="auth-form__message">
@@ -75,8 +79,8 @@ const AuthLayout = props => {
           )}
         </div>
       </main>
-      <footer className="app-wrapper__footer">
-        {/* footer */}
+      <footer className="auth-wrapper__footer">
+        Privacy Policy | Security Policy | Copyright &#169; 2021
       </footer>
     </div>
   );

@@ -11,10 +11,22 @@ import AppLayout from '../Layout/AppLayout';
 
 import './Welcome.scss';
 
+const typographyStyles = makeStyles({
+  title: {
+    margin: '24px 0',
+  },
+  message: {
+    margin: '0 24px 0 0',
+  },
+});
+
 const cardsStyles = makeStyles({
   root: {
-    width: `200px`,
+    width: `220px`,
     minHeight: `260px`,
+  },
+  contentIcon: {
+    textAlign: 'center',
   },
   icon: {
     width: '100px',
@@ -35,39 +47,40 @@ const cardsStyles = makeStyles({
 
 function App() {
   const classesCards = cardsStyles();
+  const classesTypography = typographyStyles();
 
   return (
     <AppLayout>
       <div className="welcome">
-        <Typography variant="h2">Welcome to SkillUp!</Typography>
-        <Typography>Welcome message...</Typography>
+        <Typography className={classesTypography.title} variant="h2">Welcome to SkillUp!</Typography>
+        <Typography className={classesTypography.message}>Welcome message...</Typography>
         <div className="welcome__actions">
-          <div>
-            <Card className={classesCards.root}>
-              <CardContent>
+          <Card className={classesCards.root}>
+            <CardContent>
+              <div className={classesCards.contentIcon}>
                 <a href="assets/test.txt" download="test">
                   <IconButton>
                     <GetAppIcon className={classesCards.icon}/>
                   </IconButton>
                 </a>
-                <div>
-                  Download the latest version of SkillUp...
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-          <div>
-            <Card className={classesCards.root}>
-              <CardContent>
+              </div>
+              <div>
+                Download the latest version of SkillUp...
+              </div>
+            </CardContent>
+          </Card>
+          <Card className={classesCards.root}>
+            <CardContent>
+              <div className={classesCards.contentIcon}>
                 <IconButton>
                   <AccountBoxSharpIcon className={classesCards.icon}/>
                 </IconButton>
-              </CardContent>
+              </div>
               <div>
-                  Manage your account...
-                </div>
-            </Card>
-          </div>
+                Manage your account...
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </AppLayout>

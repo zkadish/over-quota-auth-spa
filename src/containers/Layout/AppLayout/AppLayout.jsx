@@ -1,7 +1,28 @@
 import { useState } from 'react';
-import { IconButton, makeStyles, Menu, MenuItem  } from '@material-ui/core';
+import clsx from 'clsx';
+import {
+  IconButton,
+  Menu,
+  MenuItem,
+  AppBar,
+  Toolbar,
+  Drawer,
+  Divider,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import ChatIcon from '@material-ui/icons/Chat';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import SettingsIcon from '@material-ui/icons/Settings';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import GetAppIcon from '@material-ui/icons/GetApp';
 import { signOut } from '../../../services/authn';
 import routes from '../../../constants/routes';
 import './AppLayout.scss';
@@ -16,19 +37,100 @@ const iconButtonStyles = makeStyles(() => ({
   },
 }));
 
+const drawerWidth = 240;
+const drawerStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  appBar: {
+    // border: '1px solid red',
+    // position: 'static',
+    zIndex: theme.zIndex.drawer + 1,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+  },
+  appBarShift: {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(['width', 'margin'], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  // toolbar: {
+  //   display: 'flex',
+  //   justifyContent: 'space-between',
+  //   alignItems: 'center',
+  // },
+  menuButton: {
+    marginRight: 36,
+  },
+  hide: {
+    display: 'none',
+  },
+  drawer: {
+    width: drawerWidth,
+    flexShrink: 0,
+    whiteSpace: 'nowrap',
+  },
+  drawerOpen: {
+    width: drawerWidth,
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  },
+  drawerClose: {
+    transition: theme.transitions.create('width', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    overflowX: 'hidden',
+    width: theme.spacing(7) + 1,
+    [theme.breakpoints.up('sm')]: {
+      width: theme.spacing(9) + 1,
+    },
+  },
+  toolbar: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: theme.spacing(0, 1),
+    // necessary for content to be below app bar
+    ...theme.mixins.toolbar,
+  },
+  content: {
+    flexGrow: 1,
+    padding: theme.spacing(3),
+  },
+}));
+
 const AppLayout = props => {
   const { children, history } = props;
 
+  const theme = useTheme();
   const iconButtonClasses = iconButtonStyles();
+  const drawerClasses = drawerStyles();
 
   const [anchorMenu, setAnchorMenu] = useState(null);
+  const [open, setOpen] = useState(false);
 
-  const handleClick = (event) => {
+  const handleMenuOpen = (event) => {
     setAnchorMenu(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleMenuClose = () => {
     setAnchorMenu(null);
+  };
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
   };
 
   const onProfile = () => {
@@ -47,32 +149,91 @@ const AppLayout = props => {
 
   return (
     <div className="app-layout">
-      <header className="AppLayout__header">
-        <IconButton className={iconButtonClasses.root}>
-          <ChatIcon />
-        </IconButton>
-        <IconButton className={iconButtonClasses.root} onClick={handleClick}>
-          <AccountCircleIcon />
-        </IconButton>
-        <Menu
-          id="profile-menu"
-          anchorEl={anchorMenu}
-          keepMounted
-          open={Boolean(anchorMenu)}
-          onClose={handleClose}
-        >
-          {/* <MenuItem onClick={handleClose}>Sign In</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem> */}
-          <MenuItem onClick={onProfile}>Profile</MenuItem>
-          <MenuItem onClick={onSignOut}>Sign Out</MenuItem>
-        </Menu>
-      </header>
-      <main className="AppLayout__main">
-        <div className="AppLayout__content">
+      <AppBar
+        className={clsx(drawerClasses.appBar, {
+          [drawerClasses.appBarShift]: open,
+        })}
+      >
+        <Toolbar className={drawerClasses.toolbar}>
+          <IconButton
+            onClick={handleDrawerOpen}
+            className={iconButtonClasses.root}
+          >
+            <ChatIcon />
+          </IconButton>
+          <IconButton
+            className={iconButtonClasses.root}
+            onClick={handleMenuOpen}
+          >
+            <AccountCircleIcon />
+          </IconButton>
+          <Menu
+            id="profile-menu"
+            anchorEl={anchorMenu}
+            keepMounted
+            open={Boolean(anchorMenu)}
+            onClose={handleMenuClose}
+          >
+            <MenuItem>Settings</MenuItem>
+            <MenuItem>Account</MenuItem>
+            <MenuItem onClick={onProfile}>Profile</MenuItem>
+            <MenuItem onClick={onSignOut}>Sign Out</MenuItem>
+          </Menu>
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        variant="permanent"
+        className={clsx(drawerClasses.drawer, {
+          [drawerClasses.drawerOpen]: open,
+          [drawerClasses.drawerClose]: !open,
+        })}
+        classes={{
+          paper: clsx({
+            [drawerClasses.drawerOpen]: open,
+            [drawerClasses.drawerClose]: !open,
+          }),
+        }}
+      >
+        <div className={drawerClasses.toolbar}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+          </IconButton>
+        </div>
+        <Divider />
+        <List>
+          {/* <ListItem>
+            <ListItemIcon><GetAppIcon /></ListItemIcon>
+            <ListItemText>Welcome</ListItemText>
+          </ListItem> */}
+          <ListItem>
+            <ListItemIcon><ShoppingCartIcon /></ListItemIcon>
+            <ListItemText>Purchase</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon><GetAppIcon /></ListItemIcon>
+            <ListItemText>Downloads</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon><SettingsIcon /></ListItemIcon>
+            <ListItemText>App Settings</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon><HelpOutlineIcon /></ListItemIcon>
+            <ListItemText>Support</ListItemText>
+          </ListItem>
+          <ListItem>
+            <ListItemIcon><MailOutlineIcon /></ListItemIcon>
+            <ListItemText>Contact Us</ListItemText>
+          </ListItem>
+        </List>
+      </Drawer>
+      <main className={drawerClasses.content}>
+        <div className={drawerClasses.toolbar} />
+        <div className="app-layout__content">
           {children}
         </div>
       </main>
-      <footer className="AppLayout__footer">
+      <footer className="app-layout__footer">
         {/* footer */}
       </footer>
     </div>

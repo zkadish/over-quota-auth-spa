@@ -1,9 +1,9 @@
 @import '../../../styles/variables.scss';
 
-.app-wrapper {
+.auth-wrapper {
   &__header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     // align-items: center;
     height: 64px;
     background-color: $BACKGROUND_PRIMARY_DARK;
@@ -19,6 +19,9 @@
   }
 
   &__footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
     bottom: 0;
     // display: flex;

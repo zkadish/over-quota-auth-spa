@@ -3,13 +3,13 @@
   flex-direction: column;
   // justify-content: center;
   align-items: center;
-  border: 1px solid red;
+  // border: 1px solid red;
 
   &__actions {
     display: flex;
     justify-content: space-around;
     padding: 24px;
     width: 800px;
-    border: 1px solid green;
+    // border: 1px solid green;
   }
 }
