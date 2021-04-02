@@ -125,10 +125,10 @@ const Login = props => {
       const { data, status } = res;
 
       if (res.error) throw res;
-      if (status === 200) {
+      if (status === 200 && data.authenticated) {
         // TODO: after successful login clear cookie so that a new one gets created.
         setUserData(data.user);
-        history.push(routes[data.redirect]);
+        history.push(routes.APP);
       }
     }).catch(error => {
       console.log(error);

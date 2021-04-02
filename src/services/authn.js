@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 /**
  * This should be the register step
  * @param { email: String, emailLists:  } reqBody 
@@ -61,9 +60,12 @@ const login = async (reqBody) => {
   }
 }
 
-const signOut = async () => {
+const signOut = async (reqBody) => {
   try {
-    const res = await axios.get('api/auth/sign-out');
+    const res = await axios.post(
+      'api/auth/sign-out',
+      reqBody,
+    );
 
     return res;
   } catch (error) {

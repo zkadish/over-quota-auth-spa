@@ -108,7 +108,7 @@ const drawerStyles = makeStyles((theme) => ({
 }));
 
 const AppLayout = props => {
-  const { children, history } = props;
+  const { setUserData, user, children, history } = props;
 
   const theme = useTheme();
   const iconButtonClasses = iconButtonStyles();
@@ -140,10 +140,15 @@ const AppLayout = props => {
 
   const onSignOut = () => {
     setAnchorMenu(null);
-    signOut().then(res => {
-      const { data } = res;
+    history.push(routes.LOGIN);
 
-      history.push(routes[data.redirect]);
+    signOut({ email: user.email }).then(res => {
+      const { data } = res;
+      debugger
+      console.log(data);
+      setUserData(null);
+      // TODO: update user and clear access token
+      // do something on signout success???
     });
   }
 
