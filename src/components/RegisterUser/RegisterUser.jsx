@@ -64,9 +64,12 @@ const switchStyles = makeStyles(() => ({
   }
 }));
 // TODO: disable next btn after clicking next,
+// TODO: ask user if they are registering for a company
+// or if they are an individual
 // if an error occurs re-enable when on email change
 const RegisterUser = props => {
   const { setUserData, history } = props;
+
   const formControlClasses = formControlStyles();
   const loginBtnClasses = loginBtnStyles();
   const switchClasses = switchStyles();

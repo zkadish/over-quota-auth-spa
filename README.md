@@ -28,6 +28,11 @@ The idea here is have all the basic stuff Authn and Authz for starting applicati
 - react-router
 - html5-boilerplate
 
+## Getting started
+
+- npm start
+- open the app in your browser at: `localhost:3000`
+
 ## packages to add
 
 - immer reducer
@@ -37,3 +42,4 @@ The idea here is have all the basic stuff Authn and Authz for starting applicati
 ### TODOs
 
 - split out boiler plate into a seperate repo before this project gets very specific
+  

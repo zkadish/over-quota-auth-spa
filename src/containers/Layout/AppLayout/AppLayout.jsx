@@ -144,9 +144,9 @@ const AppLayout = props => {
 
     signOut({ email: user.email }).then(res => {
       const { data } = res;
-      debugger
-      console.log(data);
       setUserData(null);
+      // console.log(data);s
+      // debugger
       // TODO: update user and clear access token
       // do something on signout success???
     });
