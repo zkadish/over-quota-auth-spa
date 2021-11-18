@@ -8,6 +8,8 @@ const routes = {
   APP: '/app',
   WELCOME: '/app/welcome',
   USER_PROFILE: '/app/user-profile',
+  USER_SETTINGS: '/app/user-settings',
+  GOOGLE_CALENDAR_AUTH: '/google/calendar/auth',
 };
 
 export default routes;

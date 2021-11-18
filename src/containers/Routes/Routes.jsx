@@ -10,6 +10,8 @@ import ForgotPassword from '../../components/ForgotPassword';
 
 import Welcome from '../../containers/Welcome';
 import UserProfile from '../../containers/UserProfile';
+import UserSettings from '../../containers/UserSettings';
+import GoogleCalendarAuth from '../../containers/GoogleCalendarAuth';
 
 import routes from '../../constants/routes';
 
@@ -39,6 +41,16 @@ const Routes = () => {
       <Route exact path={routes.USER_PROFILE}>
         <Authn>
           <UserProfile />
+        </Authn>
+      </Route>
+      <Route exact path={routes.USER_SETTINGS}>
+        <Authn>
+          <UserSettings />
+        </Authn>
+      </Route>
+      <Route exact path={routes.GOOGLE_CALENDAR_AUTH}>
+        <Authn>
+          <GoogleCalendarAuth />
         </Authn>
       </Route>
       <Route exact path="/*">
