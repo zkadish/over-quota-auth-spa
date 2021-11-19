@@ -25,6 +25,8 @@ import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { signOut } from '../../../services/authn';
 import routes from '../../../constants/routes';
+import Helmet from 'react-helmet';
+
 import './AppLayout.scss';
 
 const iconButtonStyles = makeStyles(() => ({
@@ -102,13 +104,20 @@ const drawerStyles = makeStyles((theme) => ({
     ...theme.mixins.toolbar,
   },
   content: {
+    position: 'absolute',
+    top: '64px',
+    bottom: '64px',
+    left: '73px',
     flexGrow: 1,
     padding: theme.spacing(3),
+    width: 'calc(100% - 73px)',
+    overflow: 'auto',
+    border: '1px solid red',
   },
 }));
 
 const AppLayout = props => {
-  const { setUserData, user, children, history } = props;
+  const { setUserData, user, children, history, pageTitle } = props;
 
   const theme = useTheme();
   const iconButtonClasses = iconButtonStyles();
@@ -133,6 +142,11 @@ const AppLayout = props => {
     setOpen(false);
   };
 
+  const onSettings = () => {
+    setAnchorMenu(null);
+    history.push(routes.USER_SETTINGS);
+  }
+
   const onProfile = () => {
     setAnchorMenu(null);
     history.push(routes.USER_PROFILE);
@@ -153,95 +167,100 @@ const AppLayout = props => {
   }
 
   return (
-    <div className="app-layout">
-      <AppBar
-        className={clsx(drawerClasses.appBar, {
-          [drawerClasses.appBarShift]: open,
-        })}
-      >
-        <Toolbar className={drawerClasses.toolbar}>
-          <IconButton
-            onClick={handleDrawerOpen}
-            className={iconButtonClasses.root}
-          >
-            <ChatIcon />
-          </IconButton>
-          <IconButton
-            className={iconButtonClasses.root}
-            onClick={handleMenuOpen}
-          >
-            <AccountCircleIcon />
-          </IconButton>
-          <Menu
-            id="profile-menu"
-            anchorEl={anchorMenu}
-            keepMounted
-            open={Boolean(anchorMenu)}
-            onClose={handleMenuClose}
-          >
-            <MenuItem>Settings</MenuItem>
-            <MenuItem>Account</MenuItem>
-            <MenuItem onClick={onProfile}>Profile</MenuItem>
-            <MenuItem onClick={onSignOut}>Sign Out</MenuItem>
-          </Menu>
-        </Toolbar>
-      </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(drawerClasses.drawer, {
-          [drawerClasses.drawerOpen]: open,
-          [drawerClasses.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
+    <>
+    <Helmet>
+      <title>{pageTitle}</title>
+      </Helmet>
+      <div className="app-layout">
+        <AppBar
+          className={clsx(drawerClasses.appBar, {
+            [drawerClasses.appBarShift]: open,
+          })}
+        >
+          <Toolbar className={drawerClasses.toolbar}>
+            <IconButton
+              onClick={handleDrawerOpen}
+              className={iconButtonClasses.root}
+            >
+              <ChatIcon />
+            </IconButton>
+            <IconButton
+              className={iconButtonClasses.root}
+              onClick={handleMenuOpen}
+            >
+              <AccountCircleIcon />
+            </IconButton>
+            <Menu
+              id="profile-menu"
+              anchorEl={anchorMenu}
+              keepMounted
+              open={Boolean(anchorMenu)}
+              onClose={handleMenuClose}
+            >
+              <MenuItem onClick={onSettings}>Settings</MenuItem>
+              <MenuItem>Account</MenuItem>
+              <MenuItem onClick={onProfile}>Profile</MenuItem>
+              <MenuItem onClick={onSignOut}>Sign Out</MenuItem>
+            </Menu>
+          </Toolbar>
+        </AppBar>
+        <Drawer
+          variant="permanent"
+          className={clsx(drawerClasses.drawer, {
             [drawerClasses.drawerOpen]: open,
             [drawerClasses.drawerClose]: !open,
-          }),
-        }}
-      >
-        <div className={drawerClasses.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </div>
-        <Divider />
-        <List>
-          {/* <ListItem>
-            <ListItemIcon><GetAppIcon /></ListItemIcon>
-            <ListItemText>Welcome</ListItemText>
-          </ListItem> */}
-          <ListItem>
-            <ListItemIcon><ShoppingCartIcon /></ListItemIcon>
-            <ListItemText>Purchase</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon><GetAppIcon /></ListItemIcon>
-            <ListItemText>Downloads</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon><SettingsIcon /></ListItemIcon>
-            <ListItemText>App Settings</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon><HelpOutlineIcon /></ListItemIcon>
-            <ListItemText>Support</ListItemText>
-          </ListItem>
-          <ListItem>
-            <ListItemIcon><MailOutlineIcon /></ListItemIcon>
-            <ListItemText>Contact Us</ListItemText>
-          </ListItem>
-        </List>
-      </Drawer>
-      <main className={drawerClasses.content}>
-        <div className={drawerClasses.toolbar} />
-        <div className="app-layout__content">
-          {children}
-        </div>
-      </main>
-      <footer className="app-layout__footer">
-        {/* footer */}
-      </footer>
-    </div>
+          })}
+          classes={{
+            paper: clsx({
+              [drawerClasses.drawerOpen]: open,
+              [drawerClasses.drawerClose]: !open,
+            }),
+          }}
+        >
+          <div className={drawerClasses.toolbar}>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </div>
+          <Divider />
+          <List>
+            {/* <ListItem>
+              <ListItemIcon><GetAppIcon /></ListItemIcon>
+              <ListItemText>Welcome</ListItemText>
+            </ListItem> */}
+            <ListItem>
+              <ListItemIcon><ShoppingCartIcon /></ListItemIcon>
+              <ListItemText>Purchase</ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon><GetAppIcon /></ListItemIcon>
+              <ListItemText>Downloads</ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon><SettingsIcon /></ListItemIcon>
+              <ListItemText>App Settings</ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon><HelpOutlineIcon /></ListItemIcon>
+              <ListItemText>Support</ListItemText>
+            </ListItem>
+            <ListItem>
+              <ListItemIcon><MailOutlineIcon /></ListItemIcon>
+              <ListItemText>Contact Us</ListItemText>
+            </ListItem>
+          </List>
+        </Drawer>
+        <main className={drawerClasses.content}>
+          {/* <div className={drawerClasses.toolbar} /> */}
+          {/* <div className="app-layout__content"> */}
+            {children}
+          {/* </div> */}
+        </main>
+        <footer className="app-layout__footer">
+          {/* footer */}
+        </footer>
+      </div>
+    </>
   );
 };
 
