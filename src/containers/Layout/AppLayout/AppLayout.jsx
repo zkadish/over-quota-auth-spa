@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import clsx from 'clsx';
+import { useNavigate } from "react-router-dom";
 import {
   IconButton,
   Menu,
@@ -117,12 +118,13 @@ const drawerStyles = makeStyles((theme) => ({
 }));
 
 const AppLayout = props => {
-  const { setUserData, user, children, history, pageTitle } = props;
+  const { setUserData, user, children, pageTitle } = props;
 
   const theme = useTheme();
   const iconButtonClasses = iconButtonStyles();
   const drawerClasses = drawerStyles();
 
+  const navigate = useNavigate();
   const [anchorMenu, setAnchorMenu] = useState(null);
   const [open, setOpen] = useState(false);
 
@@ -144,17 +146,17 @@ const AppLayout = props => {
 
   const onSettings = () => {
     setAnchorMenu(null);
-    history.push(routes.USER_SETTINGS);
+    navigate(routes.USER_SETTINGS);
   }
 
   const onProfile = () => {
     setAnchorMenu(null);
-    history.push(routes.USER_PROFILE);
+    navigate(routes.USER_PROFILE);
   }
 
   const onSignOut = () => {
     setAnchorMenu(null);
-    history.push(routes.LOGIN);
+    navigate(routes.LOGIN);
 
     signOut({ email: user.email }).then(res => {
       const { data } = res;

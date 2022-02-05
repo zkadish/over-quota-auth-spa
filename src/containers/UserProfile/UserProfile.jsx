@@ -1,13 +1,16 @@
 import AppLayout from '../Layout/AppLayout';
 import { Paper } from '@material-ui/core';
+import Authn from '../../components/Authn';
 
 const UserProfile = () => {
   return (
-    <AppLayout>
-      <Paper>
-        <div>User Profile</div>
-      </Paper>
-    </AppLayout>
+    <Authn>
+      <AppLayout>
+        <Paper>
+          <div>User Profile</div>
+        </Paper>
+      </AppLayout>
+    </Authn>
   );
 };
 

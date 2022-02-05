@@ -2,6 +2,7 @@ import { useState, createRef, useRef } from 'react';
 import { IconButton, makeStyles, Menu, MenuItem  } from '@material-ui/core';
 // import ChatIcon from '@material-ui/icons/Chat';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { useNavigate } from "react-router-dom";
 
 import routes from '../../../constants/routes';
 import './AuthLayout.scss';
@@ -17,7 +18,8 @@ const iconButtonStyles = makeStyles(() => ({
 }));
 
 const AuthLayout = props => {
-  const { title, message, button, policy, history, children } = props;
+  const { title, message, button, policy, children } = props;
+  const navigate = useNavigate();
 
   const iconButtonClasses = iconButtonStyles();
 
@@ -35,7 +37,7 @@ const AuthLayout = props => {
   
   const onSignIn = () => {
     setAnchorMenu(null);
-    history.push(routes.LOGIN);
+    navigate(routes.LOGIN);
   }
 
   return (

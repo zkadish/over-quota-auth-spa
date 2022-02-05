@@ -11,6 +11,7 @@ import {
   Button,
   IconButton,
 } from '@material-ui/core';
+import { useNavigate } from "react-router-dom";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import AuthLayout from '../../containers/Layout/AuthLayout';
@@ -60,12 +61,13 @@ const constants = {
 };
 
 const Login = props => {
-  const { user, setUserData, history } = props;
+  const { user, setUserData } = props;
 
   const formControlClasses = formControlStyles();
   const btnClasses = btnStyles();
   const switchClasses = switchStyles();
 
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -128,7 +130,7 @@ const Login = props => {
       if (status === 200 && data.authenticated) {
         // TODO: after successful login clear cookie so that a new one gets created.
         setUserData(data.user);
-        history.push(routes.APP);
+        navigate(routes.WELCOME);
       }
     }).catch(error => {
       console.log(error);

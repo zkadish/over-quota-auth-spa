@@ -8,4 +8,3 @@ const selectedConfigStore =
 
 export const { configureStore } = selectedConfigStore;
 
-export const { history } = selectedConfigStore;

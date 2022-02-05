@@ -1,21 +1,18 @@
 import { Provider } from 'react-redux';
-// import { ConnectedRouter } from 'connected-react-router';
 import { BrowserRouter } from 'react-router-dom';
 import { ThemeProvider } from '@material-ui/core/styles';
 
 import theme from '../../styles/theme';
-import Routes from '../Routes';
+import Router from '../Router';
 
-const Root = ({ store, history }) => {
+const Root = ({ store }) => {
   return (
     <Provider store={store}>
-      {/* <ConnectedRouter history={history}> */}
       <BrowserRouter>
         <ThemeProvider theme={theme}>
-          <Routes />
+          <Router />
         </ThemeProvider>
       </BrowserRouter>
-      {/* </ConnectedRouter> */}
     </Provider>
   )
 }

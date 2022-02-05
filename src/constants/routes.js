@@ -5,7 +5,7 @@ const routes = {
   LOGIN: '/login',
   FORGOT_PASSWORD: '/forgot-password',
   RESET_PASSWORD: '/reset-password/:token',
-  APP: '/app',
+  // APP: '/app',
   WELCOME: '/app/welcome',
   USER_PROFILE: '/app/user-profile',
   USER_SETTINGS: '/app/user-settings',

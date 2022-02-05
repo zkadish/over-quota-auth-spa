@@ -1,5 +1,4 @@
 import { combineReducers } from 'redux';
-import { connectRouter } from 'connected-react-router';
 import authn from './authn';
 import app from './app';
 // import builder from './builder';
@@ -7,9 +6,8 @@ import app from './app';
 // import notifications from './notifications';
 // import winCallEvent from './winCallEvent';
 
-export default function createRootReducer(history) {
+export default function createRootReducer() {
   return combineReducers({
-    router: connectRouter(history),
     authn,
     app,
     // builder,
