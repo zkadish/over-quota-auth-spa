@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 
-import { withRouter } from 'react-router-dom';
 import CreatePassword from './CreatePassword';
 
 // import { setUserData } from '../../actions/authn';
@@ -19,4 +18,4 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   // mapDispatchToProps
-)(withRouter(CreatePassword));
+)(CreatePassword);

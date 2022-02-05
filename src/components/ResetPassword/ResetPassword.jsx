@@ -15,6 +15,7 @@ import {
   Typography,
   Paper,
 } from '@material-ui/core';
+import { useNavigate } from "react-router-dom";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Bullet from '@material-ui/icons/Lens';
@@ -98,15 +99,15 @@ const constants = {
 
 // TODO: offer to create a password witch will be sent to the email they entered
 const ResetPassword = props => {
-  const { user, setUserData, history } = props;
-
-  const { token } = useParams();
-
+  const { user, setUserData } = props;
+  
   const formControlClasses = formControlStyles();
   const btnClasses = btnStyles();
   const popperClasses = popperStyles();
   const bulletClasses = bulletStyles();
-
+  
+  const { token } = useParams();
+  const navigate = useNavigate();
   const [values, setValues] = useState({
     password: '',
     confirm: '',
@@ -198,7 +199,7 @@ const ResetPassword = props => {
       if (res.error) throw res;
       if (status === 200) {
         setUserData(data.user);
-        history.push(routes[data.redirect]); // LOGIN
+        navigate(routes[data.redirect]); // LOGIN
       }
     }).catch(error => {
       console.log(error)

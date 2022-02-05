@@ -9,6 +9,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import AccountBoxSharpIcon from '@material-ui/icons/AccountBoxSharp';
 import AppLayout from '../Layout/AppLayout';
+import Authn from '../../components/Authn';
 
 import './Welcome.scss';
 
@@ -56,42 +57,44 @@ function App() {
   const classesTypography = typographyStyles();
 
   return (
-    <AppLayout>
-      <Paper>
-        <div className="welcome">
-          <Typography className={classesTypography.title} variant="h2">Welcome to SkillUp!</Typography>
-          <Typography className={classesTypography.message}>Welcome message...</Typography>
-          <div className="welcome__actions">
-            <Card className={classesCards.root}>
-              <CardContent>
-                <div className={classesCards.contentIcon}>
-                  <a href="assets/test.txt" download="test">
+    <Authn>
+      <AppLayout>
+        <Paper>
+          <div className="welcome">
+            <Typography className={classesTypography.title} variant="h2">Welcome to SkillUp!</Typography>
+            <Typography className={classesTypography.message}>Welcome message...</Typography>
+            <div className="welcome__actions">
+              <Card className={classesCards.root}>
+                <CardContent>
+                  <div className={classesCards.contentIcon}>
+                    <a href="assets/test.txt" download="test">
+                      <IconButton>
+                        <GetAppIcon className={classesCards.icon}/>
+                      </IconButton>
+                    </a>
+                  </div>
+                  <div>
+                    Download the latest version of OverQuota...
+                  </div>
+                </CardContent>
+              </Card>
+              <Card className={classesCards.root}>
+                <CardContent>
+                  <div className={classesCards.contentIcon}>
                     <IconButton>
-                      <GetAppIcon className={classesCards.icon}/>
+                      <AccountBoxSharpIcon className={classesCards.icon}/>
                     </IconButton>
-                  </a>
-                </div>
-                <div>
-                  Download the latest version of OverQuota...
-                </div>
-              </CardContent>
-            </Card>
-            <Card className={classesCards.root}>
-              <CardContent>
-                <div className={classesCards.contentIcon}>
-                  <IconButton>
-                    <AccountBoxSharpIcon className={classesCards.icon}/>
-                  </IconButton>
-                </div>
-                <div>
-                  Manage your account...
-                </div>
-              </CardContent>
-            </Card>
+                  </div>
+                  <div>
+                    Manage your account...
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
           </div>
-        </div>
-      </Paper>
-    </AppLayout>
+        </Paper>
+      </AppLayout>
+    </Authn>
   );
 }
 

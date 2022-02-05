@@ -6,6 +6,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import Authn from '../../components/Authn';
 import {
   getGoogleCalendarAuthUrl,
   postGoogleCalendarAuthCode,
@@ -57,24 +58,26 @@ const UserSettings = props => {
   };
 
   return (
-    <AppLayout pageTitle="OverQuota - User Settings">
-      <Paper>
-        <div className="user-settings">
-          <Typography className={classesTypography.title} variant="h2">User Settings</Typography>
-          <Typography className={classesTypography.subTitle} variant="h5">Google Calendar Integration</Typography>
-          <span className="authorize-btn">
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={onGoogleCalendarAuthorize}
-            >
-              Authorize
-            </Button>
-          </span>
-          <Button variant="contained" color="primary">remove authorization</Button>
-        </div>
-      </Paper>
-    </AppLayout>
+    <Authn>
+      <AppLayout pageTitle="OverQuota - User Settings">
+        <Paper>
+          <div className="user-settings">
+            <Typography className={classesTypography.title} variant="h2">User Settings</Typography>
+            <Typography className={classesTypography.subTitle} variant="h5">Google Calendar Integration</Typography>
+            <span className="authorize-btn">
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={onGoogleCalendarAuthorize}
+              >
+                Authorize
+              </Button>
+            </span>
+            <Button variant="contained" color="primary">remove authorization</Button>
+          </div>
+        </Paper>
+      </AppLayout>
+    </Authn>
   );
 };
 export default UserSettings;

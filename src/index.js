@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from './containers/Root';
-import { configureStore, history } from './store/configStore';
+import { configureStore } from './store/configStore';
 import './index.scss';
 
 import reportWebVitals from './reportWebVitals';
@@ -10,7 +10,7 @@ const store = configureStore();
 
 ReactDOM.render(
   <React.StrictMode>
-    <Root store={store} history={history} />
+    <Root store={store} />
   </React.StrictMode>,
   document.getElementById('root')
 );

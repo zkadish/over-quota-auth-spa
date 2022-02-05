@@ -9,6 +9,7 @@ import {
   Button,
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useNavigate } from "react-router-dom";
 import AuthLayout from '../../containers/Layout/AuthLayout';
 import Switch from '../Switch';
 import routes from '../../constants/routes';
@@ -68,12 +69,13 @@ const switchStyles = makeStyles(() => ({
 // or if they are an individual
 // if an error occurs re-enable when on email change
 const RegisterUser = props => {
-  const { setUserData, history } = props;
+  const { setUserData } = props;
 
   const formControlClasses = formControlStyles();
   const loginBtnClasses = loginBtnStyles();
   const switchClasses = switchStyles();
 
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [error, setError] = useState(false);
@@ -104,7 +106,7 @@ const RegisterUser = props => {
       if (res.error) throw res;
       if (status === 200) {
         setUserData(data.user);
-        history.push(routes[data.redirect]);
+        navigate(routes[data.redirect]);
       }
     }).catch(error => {
       console.log(error)
