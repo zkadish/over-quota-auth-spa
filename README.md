@@ -17,6 +17,7 @@ The idea here is have all the basic stuff Authn and Authz for starting applicati
 - application settings
 - account settings and management
 - user creation
+  
 ## Tech Stack and main packages
 
 - node

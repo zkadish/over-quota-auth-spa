@@ -72,7 +72,7 @@ function App() {
                   </a>
                 </div>
                 <div>
-                  Download the latest version of SkillUp...
+                  Download the latest version of OverQuota...
                 </div>
               </CardContent>
             </Card>

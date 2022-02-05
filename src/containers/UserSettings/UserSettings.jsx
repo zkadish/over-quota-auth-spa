@@ -57,7 +57,7 @@ const UserSettings = props => {
   };
 
   return (
-    <AppLayout pageTitle="Quota Hero - User Settings">
+    <AppLayout pageTitle="OverQuota - User Settings">
       <Paper>
         <div className="user-settings">
           <Typography className={classesTypography.title} variant="h2">User Settings</Typography>

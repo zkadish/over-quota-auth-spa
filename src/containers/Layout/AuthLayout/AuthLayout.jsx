@@ -66,7 +66,7 @@ const AuthLayout = props => {
       </header>
       <main className="auth-wrapper__main">
         <div className="auth-form">
-          <div className="auth-form__logo">SkillUp</div>
+          <div className="auth-form__logo">OverQuota</div>
           <div className="auth-form__message">
             <div>{title}</div>
             <div>{message}</div>

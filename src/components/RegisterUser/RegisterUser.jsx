@@ -146,7 +146,7 @@ const RegisterUser = props => {
       <div className="login-options">
         <div className="login-options__remember-me">
           <Switch className={switchClasses.root} onSwitchChange={onSwitchChange} checked={emailLists} />
-          <div>&nbsp;&nbsp;Its ok to send me the latest news about SkillUp.</div>
+          <div>&nbsp;&nbsp;Its ok to send me the latest news about OverQuota.</div>
         </div>
         <Link to={routes.LOGIN}>Want to sign in?</Link>
       </div>
