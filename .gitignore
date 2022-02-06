@@ -29,4 +29,5 @@ yarn-error.log*
 PASS_WORDS.md
 
 # scripts
+/deploy
 scp-devauthspa.sh
