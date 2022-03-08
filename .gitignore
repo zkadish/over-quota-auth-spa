@@ -25,9 +25,11 @@ yarn-error.log*
 .eslintcache
 /public/assets
 
-# secrets
-PASS_WORDS.md
-
 # scripts
 /deploy
 scp-devauthspa.sh
+
+# secrets
+PASSWORDS.md
+
+.env

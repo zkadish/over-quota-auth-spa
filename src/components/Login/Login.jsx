@@ -36,6 +36,10 @@ const formControlStyles = makeStyles(() => ({
   adornment: {
     marginLeft: 0,
   },
+  link: {
+    margin: '12px 0 0',
+    textAlign: 'center',
+  },
 }));
 
 const btnStyles = makeStyles(() => ({
@@ -210,6 +214,9 @@ const Login = props => {
           <div>&nbsp;&nbsp;Its ok to send me the latest news about OverQuota.</div>
         </div>
         <Link to={routes.FORGOT_PASSWORD}>Forgot password?</Link>
+        <div className={formControlClasses.link}>
+          <Link to={routes.REGISTER_USER}>Need to create an account?</Link>
+        </div>
       </div>
     </AuthLayout>
   );

@@ -1,8 +1,6 @@
-# OverQuota Authn Authz Server Set Up
+# OverQuota Authn Authz SPA Server Set Up
 
 - Create droplet with ssh access on DigitalOcean
-  
-- $ apt-get install xclip -y this will allow you to set up an alias for the command $ pbcopy???
   
 - Loosely Following this tutorial to set up the server: <https://blog.nodeswat.com/set-up-a-secure-node-js-web-application-9256b8790f11>
 
