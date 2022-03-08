@@ -1,4 +1,17 @@
 import axios from 'axios';
+
+axios.defaults.withCredentials = true;
+
+let domain;
+// TODO: pass env vars to build process... this doesn't seem to be working
+switch(process.env.NODE_ENV) {
+  case 'dev':
+    domain = 'http://dev.auth.service.overquota.io';
+    break;
+  default: // 'local':
+    domain = '';
+}
+
 /**
  * This should be the register step
  * @param { email: String, emailLists:  } reqBody 
@@ -12,7 +25,7 @@ import axios from 'axios';
 const registerUser = async (reqBody) => {
   try {
     const res = await axios.post(
-      '/api/auth/register-user',
+      `http://dev.auth.service.overquota.io/api/auth/register-user`,
       reqBody,
     );
     
@@ -35,7 +48,7 @@ const registerUser = async (reqBody) => {
 const createPassword = async (reqBody) => {
   try {
     const res = await axios.post(
-      '/api/auth/create-password',
+      `http://dev.auth.service.overquota.io/api/auth/create-password`,
       reqBody,
     );
 
@@ -49,7 +62,7 @@ const createPassword = async (reqBody) => {
 const login = async (reqBody) => {
   try {
     const res = await axios.post(
-      '/api/auth/login',
+      `http://dev.auth.service.overquota.io/api/auth/login`,
       reqBody,
     );
 
@@ -63,7 +76,7 @@ const login = async (reqBody) => {
 const signOut = async (reqBody) => {
   try {
     const res = await axios.post(
-      'api/auth/sign-out',
+      `http://dev.auth.service.overquota.io/api/auth/sign-out`,
       reqBody,
     );
 
@@ -77,7 +90,7 @@ const signOut = async (reqBody) => {
 const forgotPassword = async (reqBody) => {
   try {
     const res = await axios.post(
-      '/api/auth/forgot-password',
+      `http://dev.auth.service.overquota.io/api/auth/forgot-password`,
       reqBody,
     );
 
@@ -90,7 +103,7 @@ const forgotPassword = async (reqBody) => {
 
 const validateReset = async (token) => {
   try {
-    const res = await axios.get(`/api/auth/validate-reset/${token}`);
+    const res = await axios.get(`http://dev.auth.service.overquota.io/api/auth/validate-reset/${token}`);
 
     return res;
   } catch (error) {
@@ -102,7 +115,7 @@ const validateReset = async (token) => {
 const resetPassword = async (token, reqBody) => {
   try {
     const res = await axios.post(
-      `/api/auth/reset-password/${token}`,
+      `http://dev.auth.service.overquota.io/auth/reset-password/${token}`,
       reqBody,
     );
 
@@ -116,7 +129,7 @@ const resetPassword = async (token, reqBody) => {
 const authn = async () => {
   console.log('get.authn()')
   try {
-    const res = await axios.get('/api/auth/authn');
+    const res = await axios.get(`http://dev.auth.service.overquota.io/api/auth/authn`);
 
     return res;
   } catch (error) {
