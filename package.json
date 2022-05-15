@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start:local": "NODE_ENV=local react-scripts start",
-    "start:dev": "NODE_ENV=dev react-scripts start",
-    "build:dev": "NODE_ENV=dev react-scripts build",
+    "local": "REACT_APP_ENV=local react-scripts start",
+    "start": "REACT_APP_ENV=development react-scripts start",
+    "build": "REACT_APP_ENV=production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

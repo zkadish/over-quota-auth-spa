@@ -32,9 +32,8 @@ const UserSettings = props => {
   const classesTypography = typographyStyles();
 
   useEffect(() => {
-    console.log(window.location);
     const { href } = window.location;
-    if (href.includes('?code=') && href.includes('&scope=')) {
+    if (user && href.includes('?code=') && href.includes('&scope=')) {
       const startIndex = href.indexOf('?code=') + 6;
       const endIndex = href.indexOf('&scope=');
       const code = href.slice(startIndex, endIndex);
