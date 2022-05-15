@@ -51,8 +51,7 @@ const cardsStyles = makeStyles({
   },
 });
 
-function App() {
-  const classesContainer = containerStyles();
+function Welcome() {
   const classesCards = cardsStyles();
   const classesTypography = typographyStyles();
 
@@ -61,13 +60,13 @@ function App() {
       <AppLayout>
         <Paper>
           <div className="welcome">
-            <Typography className={classesTypography.title} variant="h2">Welcome to SkillUp!</Typography>
+            <Typography className={classesTypography.title} variant="h2">Welcome to OverQuota!</Typography>
             <Typography className={classesTypography.message}>Welcome message...</Typography>
             <div className="welcome__actions">
               <Card className={classesCards.root}>
                 <CardContent>
                   <div className={classesCards.contentIcon}>
-                    <a href="assets/test.txt" download="test">
+                    <a href={`${window.location.origin}/assets/OverQuota-1.0.0-mac.zip`} download>
                       <IconButton>
                         <GetAppIcon className={classesCards.icon}/>
                       </IconButton>
@@ -98,4 +97,4 @@ function App() {
   );
 }
 
-export default App;
+export default Welcome;
