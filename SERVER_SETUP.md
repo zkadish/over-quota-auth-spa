@@ -21,3 +21,19 @@
 - Crate an "A" record with a subdomain In the DNS record of the domain you will be using.
 
 - To set up a firewall I used this tutorial on iptables <https://upcloud.com/community/tutorials/configure-iptables-ubuntu/>
+
+## Deploying changes to the live auth server
+
+- https://dev.auth.spa.viewportmedia.org/
+
+- $ npm run build
+
+- $ deploy/scp-devAuthSpa.sh
+
+- $ ssh zsysadmin@147.182.196.143
+
+- $ cd /var/appdata/devauthspa/public/
+  
+## Restart the nginx services
+
+- $ sudo systemctl restart nginx

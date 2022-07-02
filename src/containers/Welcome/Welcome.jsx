@@ -66,7 +66,7 @@ function Welcome() {
               <Card className={classesCards.root}>
                 <CardContent>
                   <div className={classesCards.contentIcon}>
-                    <a href={`${window.location.origin}/assets/OverQuota-1.0.0-mac.zip`} download>
+                    <a href={`${window.location.origin}/assets/OverQuota-1.0.0.dmg`} download>
                       <IconButton>
                         <GetAppIcon className={classesCards.icon}/>
                       </IconButton>

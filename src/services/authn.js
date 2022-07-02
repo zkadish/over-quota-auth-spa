@@ -5,7 +5,7 @@ axios.defaults.withCredentials = true;
 let domain;
 switch(process.env.NODE_ENV) {
   case 'production':
-    domain = 'https://dev.auth.service.overquota.io';
+    domain = 'https://dev.auth.service.viewportmedia.org';
     break;
   case 'development':
     domain = '';
