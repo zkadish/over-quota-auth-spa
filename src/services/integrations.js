@@ -6,7 +6,7 @@ console.log(process.env.NODE_ENV);
 let domain;
 switch(process.env.REACT_APP_ENV) {
   case 'production':
-    domain = 'https://dev.auth.service.overquota.io';
+    domain = 'https://dev.auth.service.viewportmedia.org';
     break;
   case 'development':
     domain = 'http://localhost:7777';
