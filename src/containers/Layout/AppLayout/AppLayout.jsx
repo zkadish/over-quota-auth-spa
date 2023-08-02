@@ -23,6 +23,7 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import SettingsIcon from '@material-ui/icons/Settings';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
+import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { signOut } from '../../../services/authn';
 import routes from '../../../constants/routes';
@@ -168,6 +169,11 @@ const AppLayout = props => {
     });
   }
 
+  const onClickVideo = () => {
+    debugger
+    navigate(routes.VIDEO);
+  }
+
   return (
     <>
     <Helmet>
@@ -226,10 +232,10 @@ const AppLayout = props => {
           </div>
           <Divider />
           <List>
-            {/* <ListItem>
+            <ListItem>
               <ListItemIcon><GetAppIcon /></ListItemIcon>
               <ListItemText>Welcome</ListItemText>
-            </ListItem> */}
+            </ListItem>
             <ListItem>
               <ListItemIcon><ShoppingCartIcon /></ListItemIcon>
               <ListItemText>Purchase</ListItemText>
@@ -241,6 +247,12 @@ const AppLayout = props => {
             <ListItem>
               <ListItemIcon><SettingsIcon /></ListItemIcon>
               <ListItemText>App Settings</ListItemText>
+            </ListItem>
+            <ListItem
+              onClick={onClickVideo}
+            >
+              <ListItemIcon><VideoLibraryIcon /></ListItemIcon>
+              <ListItemText>Video</ListItemText>
             </ListItem>
             <ListItem>
               <ListItemIcon><HelpOutlineIcon /></ListItemIcon>
