@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@mui/styles';
 import {
   Box,
   FormControl,
-  OutlinedInput,
-  InputLabel,
   FormHelperText,
   InputAdornment,
   Button,
   IconButton,
+  TextField,
 } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import Visibility from '@mui/icons-material/Visibility';
@@ -20,46 +18,7 @@ import routes from '../../constants/routes';
 import { login } from '../../services/authn';
 import { isValidEmail } from '../../constants/validators';
 
-import classes from './Login.styles.js';
-
-const formControlStyles = makeStyles(() => ({
-  root: {
-    display: 'block',
-    margin: '0 0 9px',
-  },
-  helperText: {
-    height: '19px',
-  },
-  passwordIcon: {
-    marginRight: '-14px',
-    padding: '6px 12px',
-    borderRadius: '0 4px 4px 0',
-  },
-  adornment: {
-    marginLeft: 0,
-  },
-  link: {
-    margin: '12px 0 0',
-    textAlign: 'center',
-  },
-}));
-
-const btnStyles = makeStyles(() => ({
-  root: {
-    margin: '0 0 24px',
-    height: '56px',
-    fontSize: '1.4rem',
-    textTransform: 'inherit',
-    fontWeight: '400'
-  }
-}));
-
-const switchStyles = makeStyles(() => ({
-  root: {
-    position: 'relative',
-    top: '2px'
-  }
-}));
+import classes from './Login.styles';
 
 const constants = {
   title: 'Login to your Account...',
@@ -68,10 +27,6 @@ const constants = {
 
 const Login = props => {
   const { user, setUserData } = props;
-
-  const formControlClasses = formControlStyles();
-  const btnClasses = btnStyles();
-  const switchClasses = switchStyles();
 
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -153,15 +108,16 @@ const Login = props => {
       button="Login"
       policy
     >
-      <FormControl sx={{ ...classes.formControl }} variant="outlined">
-        <InputLabel error={errors.email} htmlFor="email">Email</InputLabel>
-        <OutlinedInput
+      <FormControl sx={{ ...classes.formControl }}>
+        <TextField
           id="email"
           type="text"
           value={email}
           onChange={onEmailChange}
           error={errors.email}
+          label="Email"
           labelWidth={43}
+          variant="outlined"
           fullWidth
         />
         <FormHelperText
@@ -171,9 +127,8 @@ const Login = props => {
           {errors.email && 'Enter a valid email.'}
         </FormHelperText>
       </FormControl>
-      <FormControl sx={{ ...classes.formControl }} variant="outlined">
-        <InputLabel error={errors.password} htmlFor="password">Password</InputLabel>
-        <OutlinedInput
+      <FormControl sx={{ ...classes.formControl }}>
+        <TextField
           id="password"
           type={showPassword ? 'text' : 'password'}
           value={password}
@@ -192,7 +147,9 @@ const Login = props => {
             </InputAdornment>
           }
           labelWidth={73}
+          label="Password"
           error={errors.password}
+          variant="outlined"
           aria-describedby="helper-text"
           fullWidth
         />
@@ -212,7 +169,7 @@ const Login = props => {
       </Button>
       <Box sx={{ ...classes.loginOptions }}>
         <Box className="remember-me">
-          <Switch className={switchClasses.root} onSwitchChange={onSwitchChange} checked={emailLists} />
+          <Switch onSwitchChange={onSwitchChange} checked={emailLists} />
           <Box>&nbsp;&nbsp;Its ok to send me the latest news about OverQuota.</Box>
         </Box>
         <Link to={routes.FORGOT_PASSWORD}>Forgot password?</Link>

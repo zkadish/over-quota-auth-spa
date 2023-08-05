@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import {
   Box,
   FormControl,
-  InputLabel,
-  OutlinedInput,
   FormHelperText,
   Button,
   Dialog,
@@ -12,6 +10,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
+  TextField,
 } from '@mui/material';
 import AuthLayout from '../../containers/Layout/AuthLayout';
 import routes from '../../constants/routes';
@@ -65,15 +64,16 @@ const ForgotPassword = () => {
       title={constants.title}
       message={constants.message}
     >
-      <FormControl sx={{ ...classes.formControl }} variant="outlined">
-        <InputLabel error={!!error} htmlFor="email">Email</InputLabel>
-        <OutlinedInput
+      <FormControl sx={{ ...classes.formControl }}>
+        <TextField
           id="email"
           type="text"
           value={email}
           onChange={onEmailChange}
           error={!!error}
+          label="Email"
           labelWidth={43}
+          variant="outlined"
           fullWidth
         />
         <FormHelperText

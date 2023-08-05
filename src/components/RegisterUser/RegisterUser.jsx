@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import {
   Box,
   FormControl,
-  InputLabel,
-  OutlinedInput,
   FormHelperText,
   Button,
+  TextField,
 } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import AuthLayout from '../../containers/Layout/AuthLayout';
@@ -70,18 +69,19 @@ const RegisterUser = props => {
       button="Next"
       policy
     >
-      <FormControl sx={{ ...classes.formControl }} error={error} variant="outlined">
-        <InputLabel htmlFor="email">Email</InputLabel>
-        <OutlinedInput
+      <FormControl sx={{ ...classes.formControl }} error={error}>
+        <TextField
           id="email"
           type="text"
           value={email}
           error={error}
           onChange={onEmailChange}
+          label="Email"
           labelWidth={43}
+          variant="outlined"
           fullWidth
         />
-        <FormHelperText className="helperText" error={error} id="helper-text">
+        <FormHelperText className="helper-text" error={error} id="helper-text">
           {error && 'Enter a valid email.'}
         </FormHelperText>
       </FormControl>

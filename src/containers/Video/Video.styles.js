@@ -27,6 +27,15 @@ const classes = {
       margin: '0 24px 0 0',
     },
   },
+  videoPlayer: {
+    display: 'flex',
+    justifyContent: 'center',
+    border: '1px solid red',
+    '.player-size': {
+      width: '600px',
+      // height: '600px',
+    }
+  }
 }
 
 export default classes;
