@@ -59,6 +59,7 @@ function Video() {
     // You can handle player events here, for example:
     player.on('loadedmetadata', () => {
       console.log('videojs player has loaded video metadata');
+      // look for audio and text tracks when this event executes
     });
 
     player.on('waiting', () => {

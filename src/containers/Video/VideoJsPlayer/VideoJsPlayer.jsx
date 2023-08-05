@@ -11,6 +11,34 @@ const VideoJsPlayer = (props) => {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
 
+  // TODO: replace with moment or something that will format seconds
+  const convertSecondsToTimecode = (s) => {
+    let seconds = s;
+    seconds = seconds < 0 ? 0 : seconds;
+    let hours = Math.floor(seconds / 3600);
+    seconds -= hours * 3600;
+    let minutes = Math.floor(seconds / 60);
+    seconds -= minutes * 60;
+    let secs = Math.floor(seconds);
+    seconds -= secs;
+    // TODO: get frame rate from video and pass it here to get accurate frames value
+    let frames = Math.floor(seconds * 30);
+
+    if (Number.isNaN(seconds) || seconds === Infinity) {
+      hours = '--';
+      minutes = '--';
+      secs = '--';
+      frames = '--';
+    }
+
+    const hoursStr = hours < 10 ? `0${hours}` : hours;
+    const minutesStr = minutes < 10 ? `0${minutes}` : minutes;
+    const secsStr = secs < 10 ? `0${secs}` : secs;
+    const framesStr = frames < 10 ? `0${frames}` : frames;
+
+    return `${hoursStr}:${minutesStr}:${secsStr}:${framesStr}`;
+  }
+
   useEffect(() => {
     // Make sure Video.js player is only initialized once
     if(!playerRef.current) {
@@ -20,7 +48,8 @@ const VideoJsPlayer = (props) => {
       // videoElement.classList.add('vjs-big-play-centered');
       videoRef.current.appendChild(videoElement);
 
-      //
+      videojs.setFormatTime((seconds, _) => convertSecondsToTimecode(seconds));
+
       const player = playerRef.current = videojs(videoElement, options, () => {
         console.log('player is ready');
         const moveOneFrame = (forward) => {

@@ -18,8 +18,8 @@ import {
 import ListItemButton from '@mui/material/ListItemButton';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
-import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import { styled, useTheme, Theme, CSSObject } from '@mui/styles';
+import MuiAppBar from '@mui/material/AppBar';
+import { styled, useTheme } from '@mui/styles';
 // import ChatIcon from '@mui/icons-material/Chat';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
@@ -57,9 +57,11 @@ const closedMixin = (theme) => ({
   }),
   overflowX: 'hidden',
   width: `calc(${theme.spacing(7)} + 1px)`,
-  [theme.breakpoints.up('sm')]: {
-    width: `calc(${theme.spacing(8)} + 1px)`,
-  },
+  // the following code breaks the drawer by preventing it
+  // from expanding when the browser is greater then 600px
+  // [theme.breakpoints.up('sm')]: {
+  //   width: `calc(${theme.spacing(8)} + 1px)`,
+  // },
 });
 
 const DrawerHeader = styled('div')(({ theme }) => ({
