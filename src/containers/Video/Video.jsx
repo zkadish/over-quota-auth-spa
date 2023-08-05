@@ -4,64 +4,23 @@ import {
   IconButton,
   Typography,
   Paper,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
-import GetAppIcon from '@material-ui/icons/GetApp';
-import AccountBoxSharpIcon from '@material-ui/icons/AccountBoxSharp';
+  Box,
+} from '@mui/material';
+import GetAppIcon from '@mui/icons-material/GetApp';
+import AccountBoxSharpIcon from '@mui/icons-material/AccountBoxSharp';
 import AppLayout from '../Layout/AppLayout';
 import Authn from '../../components/Authn';
 
-import './Video.scss';
-
-const containerStyles = makeStyles({
-  textAlign: 'center',
-});
-
-const typographyStyles = makeStyles({
-  title: {
-    margin: '24px 0',
-  },
-  message: {
-    margin: '0 24px 0 0',
-  },
-});
-
-const cardsStyles = makeStyles({
-  root: {
-    width: `220px`,
-    minHeight: `260px`,
-  },
-  contentIcon: {
-    textAlign: 'center',
-  },
-  icon: {
-    width: '100px',
-    height: '100px',
-  },
-  bullet: {
-    display: 'inline-block',
-    margin: '0 2px',
-    transform: 'scale(0.8)',
-  },
-  title: {
-    fontSize: 14,
-  },
-  pos: {
-    marginBottom: 12,
-  },
-});
+import classes from './Video.styles';
 
 function Welcome() {
-  const classesCards = cardsStyles();
-  const classesTypography = typographyStyles();
-
   return (
     <Authn>
       <AppLayout>
         <Paper>
-          <div className="welcome">
-            <Typography className={classesTypography.title} variant="h2">Your Videos</Typography>
-          </div>
+          <Box sx={{ ...classes.video }}>
+            <Typography className="title" variant="h2">Your Videos</Typography>
+          </Box>
         </Paper>
       </AppLayout>
     </Authn>

@@ -1,5 +1,5 @@
 // import AppLayout from '../../containers/Layout/AppLayout';
-// import { Paper } from '@material-ui/core';
+// import { Paper } from '@mui/core';
 import Authn from '../Authn';
 
 const Error404 = () => {

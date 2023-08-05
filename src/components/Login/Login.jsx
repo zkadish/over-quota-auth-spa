@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
 import {
+  Box,
   FormControl,
   OutlinedInput,
   InputLabel,
@@ -10,15 +10,17 @@ import {
   InputAdornment,
   Button,
   IconButton,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import AuthLayout from '../../containers/Layout/AuthLayout';
 import Switch from '../Switch';
 import routes from '../../constants/routes';
 import { login } from '../../services/authn';
 import { isValidEmail } from '../../constants/validators';
+
+import classes from './Login.styles.js';
 
 const formControlStyles = makeStyles(() => ({
   root: {
@@ -151,7 +153,7 @@ const Login = props => {
       button="Login"
       policy
     >
-      <FormControl className={clsx(formControlClasses.root)} variant="outlined">
+      <FormControl sx={{ ...classes.formControl }} variant="outlined">
         <InputLabel error={errors.email} htmlFor="email">Email</InputLabel>
         <OutlinedInput
           id="email"
@@ -163,13 +165,13 @@ const Login = props => {
           fullWidth
         />
         <FormHelperText
-          className={formControlClasses.helperText}
+          className="helper-text"
           error={errors.email}
         >
           {errors.email && 'Enter a valid email.'}
         </FormHelperText>
       </FormControl>
-      <FormControl className={clsx(formControlClasses.root)} variant="outlined">
+      <FormControl sx={{ ...classes.formControl }} variant="outlined">
         <InputLabel error={errors.password} htmlFor="password">Password</InputLabel>
         <OutlinedInput
           id="password"
@@ -177,9 +179,9 @@ const Login = props => {
           value={password}
           onChange={onPasswordChange}
           endAdornment={
-            <InputAdornment className={formControlClasses.adornment} position="end">
+            <InputAdornment className="adornment" position="end">
               <IconButton
-                className={formControlClasses.passwordIcon}
+                className="password-icon"
                 aria-label="toggle password visibility"
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}
@@ -194,13 +196,13 @@ const Login = props => {
           aria-describedby="helper-text"
           fullWidth
         />
-        <FormHelperText error={errors.password} className={formControlClasses.helperText} id="helper-text">
+        <FormHelperText error={errors.password} className="helper-text" id="helper-text">
           {errors.password && 'Email and password don\'t match our records.'}
         </FormHelperText>
       </FormControl>
       <Button
         color="primary"
-        className={btnClasses.root}
+        sx={{ ...classes.buttonStyles }}
         fullWidth
         variant="contained"
         onClick={onClickHandler}
@@ -208,16 +210,16 @@ const Login = props => {
       >
         Login
       </Button>
-      <div className="login-options">
-        <div className="login-options__remember-me">
+      <Box sx={{ ...classes.loginOptions }}>
+        <Box className="remember-me">
           <Switch className={switchClasses.root} onSwitchChange={onSwitchChange} checked={emailLists} />
-          <div>&nbsp;&nbsp;Its ok to send me the latest news about OverQuota.</div>
-        </div>
+          <Box>&nbsp;&nbsp;Its ok to send me the latest news about OverQuota.</Box>
+        </Box>
         <Link to={routes.FORGOT_PASSWORD}>Forgot password?</Link>
-        <div className={formControlClasses.link}>
+        <Box className="link">
           <Link to={routes.REGISTER_USER}>Need to create an account?</Link>
-        </div>
-      </div>
+        </Box>
+      </Box>
     </AuthLayout>
   );
 };

@@ -1,5 +1,5 @@
 import AppLayout from '../Layout/AppLayout';
-import { Paper } from '@material-ui/core';
+import { Paper } from '@mui/material';
 import Authn from '../../components/Authn';
 
 const UserProfile = () => {

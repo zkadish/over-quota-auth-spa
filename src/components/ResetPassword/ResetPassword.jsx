@@ -1,8 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
 import {
+  Box,
   FormControl,
   OutlinedInput,
   InputLabel,
@@ -14,75 +13,18 @@ import {
   Fade,
   Typography,
   Paper,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Bullet from '@material-ui/icons/Lens';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Bullet from '@mui/icons-material/Lens';
 import AuthLayout from '../../containers/Layout/AuthLayout';
 import routes from '../../constants/routes';
 import { resetPassword, validateReset } from '../../services/authn';
 import { validatePassword } from '../../constants/validators';
 
-import './ExpiredLink.scss';
+import classes from './ResetPassword.styles.js';
 
-const formControlStyles = makeStyles(() => ({
-  root: {
-    display: 'block',
-    margin: '0 0 24px',
-  },
-  confirm: {
-    display: 'block',
-    margin: '0 0 5px',
-  },
-  helperText: {
-    height: '19px',
-    color: '#f44336;',
-  },
-  error: {
-    '& .MuiFormLabel-root.Mui-focused': {
-      color: '#f44336;',
-    }
-  },
-  passwordIcon: {
-    marginRight: '-14px',
-    padding: '6px 12px',
-    borderRadius: '0 4px 4px 0',
-  }
-}));
-
-const btnStyles = makeStyles(() => ({
-  root: {
-    margin: '0 0 24px',
-    height: '56px',
-    fontSize: '1.4rem',
-    textTransform: 'inherit',
-    fontWeight: '400'
-  }
-}));
-
-const popperStyles = makeStyles((theme) => ({
-  root: {
-    zIndex: 1,
-    width: '400px',
-  },
-  paper: {
-    padding: theme.spacing(2),
-  }
-}));
-
-const bulletStyles = makeStyles(() => ({
-  root: {
-    width: '10px',
-    height: '10px',
-  },
-  warn: {
-    color: 'orange',
-  },
-  validated: {
-    color: 'green',
-  }
-}));
 // TODO: add to a constants file
 const requirements = [
   { text: '8 or more characters', id: 'eightChars' },
@@ -100,12 +42,6 @@ const constants = {
 // TODO: offer to create a password witch will be sent to the email they entered
 const ResetPassword = props => {
   const { user, setUserData } = props;
-  
-  const formControlClasses = formControlStyles();
-  const btnClasses = btnStyles();
-  const popperClasses = popperStyles();
-  const bulletClasses = bulletStyles();
-  
   const { token } = useParams();
   const navigate = useNavigate();
   const [values, setValues] = useState({
@@ -215,17 +151,17 @@ const ResetPassword = props => {
     >
       {/* TODO: base the message on error response  */}
       {!user && (
-        <div className="expired-link">
-          <div className="expired-link__text">
+        <Box sx={{ ...classes.expiredLink }}>
+          <Box className="expired-link-text">
             Your password reset link has expired. If you still need to reset your 
             password go back to the forgot password page and request another one.
-          </div>
+          </Box>
           <Link to={routes.FORGOT_PASSWORD}>Forgot password?</Link>
-        </div>
+        </Box>
       )}
       {!!user && (
         <>
-          <FormControl className={clsx(formControlClasses.root)} variant="outlined">
+          <FormControl sx={{ ...classes.formControl }} variant="outlined">
             <InputLabel htmlFor="password">Password</InputLabel>
             <OutlinedInput
               ref={input}
@@ -238,7 +174,7 @@ const ResetPassword = props => {
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
-                    className={formControlClasses.passwordIcon}
+                    className="password-icon"
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
@@ -252,7 +188,13 @@ const ResetPassword = props => {
               fullWidth
             />
           </FormControl>
-          <FormControl className={clsx(formControlClasses.confirm, { [formControlClasses.error]: errors.confirm })} variant="outlined">
+          <FormControl
+            sx={{
+              ...classes.formControlConfirm,
+              ...(errors.confirm && classes.formControlError)
+            }}
+            variant="outlined"
+          >
             <InputLabel
               htmlFor="confirm"
             >Confirm Password</InputLabel>
@@ -264,7 +206,7 @@ const ResetPassword = props => {
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
-                    className={formControlClasses.passwordIcon}
+                    className="password-icon"
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}
@@ -279,13 +221,13 @@ const ResetPassword = props => {
               aria-describedby="helper-text"
               fullWidth
             />
-            <FormHelperText className={formControlClasses.helperText} id="helper-text">
+            <FormHelperText className="helper-text" id="helper-text">
               {errors.confirm && 'Passwords must match...'}
             </FormHelperText>
           </FormControl>
           <Button
             color="primary"
-            className={btnClasses.root}
+            sx={{ ...classes.buttonStyles }}
             fullWidth
             variant="contained"
             onClick={onResetPassword}
@@ -294,7 +236,7 @@ const ResetPassword = props => {
             Reset Password
           </Button>
           <Popper
-            className={popperClasses.root}
+            sx={{ ...classes.popperStyles }}
             open={open}
             anchorEl={input.current}
             placement="right-start"
@@ -308,15 +250,18 @@ const ResetPassword = props => {
           >
             {({ TransitionProps }) => (
               <Fade {...TransitionProps} timeout={350}>
-                <Paper className={popperClasses.paper} elevation={8}>
+                <Paper className="popperStyles-paper" elevation={8}>
                   <Typography>Password Requirements...</Typography>
                   {requirements.map((req) => {
                     return (
                       <Typography key={req.text}>
-                        <Bullet className={clsx(bulletClasses.root,
-                          { [bulletClasses.validated]: requirePassword[req.id] },
-                          { [bulletClasses.warn]: !requirePassword[req.id] },
-                        )} />
+                        <Bullet
+                          sx={{
+                            ...classes.bulletStyles,
+                            ...(requirePassword[req.id] && classes.bulletValidated),
+                            ...(!requirePassword[req.id] && classes.bulletWarn),
+                          }}
+                        />
                         &nbsp;{req.text}
                       </Typography>
                     )

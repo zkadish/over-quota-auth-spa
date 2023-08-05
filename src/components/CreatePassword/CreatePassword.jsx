@@ -1,6 +1,4 @@
 import { useState, useRef } from 'react';
-import clsx from 'clsx';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   FormControl,
   OutlinedInput,
@@ -13,73 +11,17 @@ import {
   Fade,
   Typography,
   Paper,
-} from '@material-ui/core';
+} from '@mui/material';
 import { useNavigate } from "react-router-dom";
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Bullet from '@material-ui/icons/Lens';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import Bullet from '@mui/icons-material/Lens';
 import AuthLayout from '../../containers/Layout/AuthLayout';
 import routes from '../../constants/routes';
 import { createPassword } from '../../services/authn';
 import { validatePassword } from '../../constants/validators';
 
-const formControlStyles = makeStyles(() => ({
-  root: {
-    display: 'block',
-    margin: '0 0 28px',
-  },
-  confirm: {
-    display: 'block',
-    margin: '0 0 9px',
-  },
-  helperText: {
-    height: '19px',
-    color: '#f44336;',
-  },
-  error: {
-    '& .MuiFormLabel-root.Mui-focused': {
-      color: '#f44336;',
-    }
-  },
-  passwordIcon: {
-    marginRight: '-14px',
-    padding: '6px 12px',
-    borderRadius: '0 4px 4px 0',
-  }
-}));
-
-const btnStyles = makeStyles(() => ({
-  root: {
-    margin: '0 0 24px',
-    height: '56px',
-    fontSize: '1.4rem',
-    textTransform: 'inherit',
-    fontWeight: '400'
-  }
-}));
-
-const popperStyles = makeStyles((theme) => ({
-  root: {
-    zIndex: 1,
-    width: '400px',
-  },
-  paper: {
-    padding: theme.spacing(2),
-  }
-}));
-
-const bulletStyles = makeStyles(() => ({
-  root: {
-    width: '10px',
-    height: '10px',
-  },
-  warn: {
-    color: 'orange',
-  },
-  validated: {
-    color: 'green',
-  }
-}));
+import classes from './CreatePassword.styles.js';
 
 const requirements = [
   { text: '8 or more characters', id: 'eightChars' },
@@ -97,11 +39,6 @@ const constants = {
 // TODO: offer to create a password witch will be sent to the email they entered
 const CreatePassword = props => {
   const { user } = props;
-
-  const formControlClasses = formControlStyles();
-  const btnClasses = btnStyles();
-  const popperClasses = popperStyles();
-  const bulletClasses = bulletStyles();
 
   const navigate = useNavigate();
   const [values, setValues] = useState({
@@ -201,7 +138,7 @@ const CreatePassword = props => {
       button="Create Password"
       policy
     >
-      <FormControl className={clsx(formControlClasses.root)} variant="outlined">
+      <FormControl sx={{ ...classes.formControl }} variant="outlined">
         <InputLabel htmlFor="password">Password</InputLabel>
         <OutlinedInput
           ref={input}
@@ -214,7 +151,7 @@ const CreatePassword = props => {
           endAdornment={
             <InputAdornment position="end">
               <IconButton
-                className={formControlClasses.passwordIcon}
+                className="password-icon"
                 aria-label="toggle password visibility"
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}
@@ -228,7 +165,13 @@ const CreatePassword = props => {
           fullWidth
         />
       </FormControl>
-      <FormControl className={clsx(formControlClasses.confirm, { [formControlClasses.error]: errors.confirm })} variant="outlined">
+      <FormControl
+        sx={{
+          ...classes.formControlConfirm,
+          ...(errors.confirm && classes.formControlError),
+        }}
+        variant="outlined"
+      >
         <InputLabel
           htmlFor="confirm"
         >Confirm Password</InputLabel>
@@ -240,7 +183,7 @@ const CreatePassword = props => {
           endAdornment={
             <InputAdornment position="end">
               <IconButton
-                className={formControlClasses.passwordIcon}
+                className="password-icon"
                 aria-label="toggle password visibility"
                 onClick={handleClickShowPassword}
                 onMouseDown={handleMouseDownPassword}
@@ -255,13 +198,13 @@ const CreatePassword = props => {
           aria-describedby="helper-text"
           fullWidth
         />
-        <FormHelperText className={formControlClasses.helperText} id="helper-text">
+        <FormHelperText className="helper-text" id="helper-text">
           {errors.confirm && 'Passwords must match...'}
         </FormHelperText>
       </FormControl>
       <Button
         color="primary"
-        className={btnClasses.root}
+        sx={{ ...classes.buttonStyles }}
         fullWidth
         variant="contained"
         onClick={onCreatePassword}
@@ -270,7 +213,7 @@ const CreatePassword = props => {
         Create Password
       </Button> 
       <Popper
-        className={popperClasses.root}
+        sx={{ ...classes.popperStyles }}
         open={open}
         anchorEl={input.current}
         placement="right-start"
@@ -284,15 +227,18 @@ const CreatePassword = props => {
       >
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
-            <Paper className={popperClasses.paper} elevation={8}>
+            <Paper className="popper-paper" elevation={8}>
               <Typography>Password Requirements...</Typography>
               {requirements.map((req) => {
                 return (
                   <Typography key={req.text}>
-                    <Bullet className={clsx(bulletClasses.root,
-                      { [bulletClasses.validated]: requirePassword[req.id] },
-                      { [bulletClasses.warn]: !requirePassword[req.id] },
-                    )} />
+                    <Bullet
+                      sx={{
+                        ...classes.bulletStyles,
+                        ...(requirePassword[req.id] && classes.bulletValidated),
+                        ...(!requirePassword[req.id] && classes.bulletWarn),
+                      }}
+                    />
                     &nbsp;{req.text}
                   </Typography>
                 )

@@ -1,5 +1,5 @@
 import AppLayout from '../Layout/AppLayout';
-import { Paper } from '@material-ui/core';
+import { Paper, Box } from '@mui/material';
 import Authn from '../../components/Authn';
 
 const GoogleCalendarAuth = () => {
@@ -7,7 +7,7 @@ const GoogleCalendarAuth = () => {
     <Authn>
       <AppLayout>
         <Paper>
-          <div>Google Calendar Auth</div>
+          <Box>Google Calendar Auth</Box>
         </Paper>
       </AppLayout>
     </Authn>
