@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import clsx from 'clsx';
 import {
+  Box,
   FormControl,
   InputLabel,
   OutlinedInput,
@@ -12,62 +12,13 @@ import {
   DialogContent,
   DialogContentText,
   DialogActions,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+} from '@mui/material';
 import AuthLayout from '../../containers/Layout/AuthLayout';
 import routes from '../../constants/routes';
 import { forgotPassword } from '../../services/authn';
 import { isValidEmail } from '../../constants/validators';
 
-const formControlStyles = makeStyles(() => ({
-  root: {
-    display: 'block',
-    margin: '0 0 9px',
-  },
-  helperText: {
-    height: '19px',
-  },
-  passwordIcon: {
-    marginRight: '-14px',
-    padding: '6px 12px',
-    borderRadius: '0 4px 4px 0',
-  },
-  adornment: {
-    marginLeft: 0,
-  },
-  link: {
-    margin: '0 0 24px',
-    textAlign: 'center',
-  },
-}));
-
-const loginBtnStyles = makeStyles(() => ({
-  root: {
-    margin: '0 0 24px',
-    height: '56px',
-    fontSize: '1.4rem',
-    textTransform: 'inherit',
-    fontWeight: '400'
-  }
-}));
-
-const dialogStyles = makeStyles(() => ({
-  root: {
-    '& .MuiDialog-paperWidthSm': {
-      maxWidth: '400px',
-    }
-  },
-  title: {
-    '& .MuiTypography-h6': {
-      fontSize: '36px',
-      fontWeight: 'bold',
-    }
-  },
-  content: {
-    fontSize: '20px',
-    fontWeight: 'bold',
-  }
-}));
+import classes from './ForgotPassword.styles';
 
 const constants = {
   title: 'Enter your email...',
@@ -75,10 +26,6 @@ const constants = {
 };
 
 const ForgotPassword = () => {
-  const formControlClasses = formControlStyles();
-  const loginBtnClasses = loginBtnStyles();
-  const dialogClasses = dialogStyles();
-
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [disabled, setDisabled] = useState(false);
@@ -118,7 +65,7 @@ const ForgotPassword = () => {
       title={constants.title}
       message={constants.message}
     >
-      <FormControl className={clsx(formControlClasses.root)} variant="outlined">
+      <FormControl sx={{ ...classes.formControl }} variant="outlined">
         <InputLabel error={!!error} htmlFor="email">Email</InputLabel>
         <OutlinedInput
           id="email"
@@ -130,7 +77,7 @@ const ForgotPassword = () => {
           fullWidth
         />
         <FormHelperText
-          className={formControlClasses.helperText}
+          className="helper-text"
           error={!!error}
         >
           {error}
@@ -138,7 +85,7 @@ const ForgotPassword = () => {
       </FormControl>
       <Button
         color="primary"
-        className={loginBtnClasses.root}
+        sx={{ ...classes.loginButton}}
         fullWidth
         variant="contained"
         onClick={onResetPassword}
@@ -146,21 +93,21 @@ const ForgotPassword = () => {
       >
         Reset Password
       </Button>
-      <div className={formControlClasses.link}>
+      <Box sx={{ ...classes.formControlLink }}>
         <Link to={routes.REGISTER_USER}>Need to create an account?</Link>
-      </div>
+      </Box>
       <Dialog
         open={dialog}
         onClose={onCloseDialog}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
-        className={dialogClasses.root}
+        className="dialog"
       >
-        <DialogTitle className={dialogClasses.title} id="alert-dialog-title">
+        <DialogTitle className="dialog-title" id="alert-dialog-title">
           An Email has been sent to: {email}
         </DialogTitle>
         <DialogContent>
-          <DialogContentText className={dialogClasses.content} id="alert-dialog-description">
+          <DialogContentText className="dialog-content" id="alert-dialog-description">
             You should receive a password reset link in your email. Reset your password right away as the link is time sensitive and will expire shortly.
           </DialogContentText>
         </DialogContent>

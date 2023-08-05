@@ -1,35 +1,19 @@
 import { useEffect } from 'react';
 import AppLayout from '../Layout/AppLayout';
 import {
+  Box,
   Paper,
   Typography,
   Button,
-} from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
+} from '@mui/material';
 import Authn from '../../components/Authn';
 import {
   getGoogleCalendarAuthUrl,
   postGoogleCalendarAuthCode,
 } from '../../services/integrations';
-import './UserSettings.scss';
-
-const typographyStyles = makeStyles({
-  title: {
-    padding: '24px 0',
-  },
-  subTitle: {
-    padding: '24px 0',
-  },
-  message: {
-    margin: '0 24px 0 0',
-  },
-});
-
-
 
 const UserSettings = props => {
   const { user } = props;
-  const classesTypography = typographyStyles();
 
   useEffect(() => {
     const { href } = window.location;
@@ -60,10 +44,10 @@ const UserSettings = props => {
     <Authn>
       <AppLayout pageTitle="OverQuota - User Settings">
         <Paper>
-          <div className="user-settings">
-            <Typography className={classesTypography.title} variant="h2">User Settings</Typography>
-            <Typography className={classesTypography.subTitle} variant="h5">Google Calendar Integration</Typography>
-            <span className="authorize-btn">
+          <Box sx={{ padding: '0 24px 24px' }}>
+            <Typography sx={{ padding: '24px 0' }} variant="h2">User Settings</Typography>
+            <Typography sx={{ padding: '24px 0' }} variant="h5">Google Calendar Integration</Typography>
+            <Box component="span" sx={{ margin: '0 16px 0 0' }}>
               <Button
                 variant="contained"
                 color="primary"
@@ -71,9 +55,9 @@ const UserSettings = props => {
               >
                 Authorize
               </Button>
-            </span>
+            </Box>
             <Button variant="contained" color="primary">remove authorization</Button>
-          </div>
+          </Box>
         </Paper>
       </AppLayout>
     </Authn>

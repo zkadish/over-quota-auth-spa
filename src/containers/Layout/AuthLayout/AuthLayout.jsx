@@ -1,27 +1,14 @@
-import { useState, createRef, useRef } from 'react';
-import { IconButton, makeStyles, Menu, MenuItem  } from '@material-ui/core';
-// import ChatIcon from '@material-ui/icons/Chat';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { useState, createRef } from 'react';
+import { Box, IconButton, Menu, MenuItem } from '@mui/material';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import { useNavigate } from "react-router-dom";
-
 import routes from '../../../constants/routes';
-import './AuthLayout.scss';
 
-const iconButtonStyles = makeStyles(() => ({
-  root: {
-    color: '#fff',
-    '& .MuiSvgIcon-root': {
-      width: '40px',
-      height: '40px',
-    },
-  },
-}));
+import classes from './AuthLayout.styles';
 
 const AuthLayout = props => {
   const { title, message, button, policy, children } = props;
   const navigate = useNavigate();
-
-  const iconButtonClasses = iconButtonStyles();
 
   const [anchorMenu, setAnchorMenu] = useState(null);
 
@@ -41,14 +28,14 @@ const AuthLayout = props => {
   }
 
   return (
-    <div className="auth-wrapper">
-      <header className="auth-wrapper__header">
-        {/* <IconButton className={iconButtonClasses.root}>
+    <Box sx={{ ...classes.authLayout }}>
+      <header className="authLayout-header">
+        {/* <IconButton className="icon-button">
           <ChatIcon />
         </IconButton> */}
         <IconButton
           ref={accountMenu}
-          className={iconButtonClasses.root}
+          className="icon-button"
           onClick={handleClick}
         >
           <AccountCircleIcon />
@@ -66,25 +53,25 @@ const AuthLayout = props => {
           <MenuItem onClick={handleClose}>Logout</MenuItem> */}
         </Menu>
       </header>
-      <main className="auth-wrapper__main">
-        <div className="auth-form">
-          <div className="auth-form__logo">OverQuota</div>
-          <div className="auth-form__message">
-            <div>{title}</div>
-            <div>{message}</div>
-          </div>
+      <main className="authLayout-main">
+        <Box className="auth-form">
+          <Box className="auth-form-logo">OverQuota</Box>
+          <Box className="auth-form-message">
+            <Box>{title}</Box>
+            <Box>{message}</Box>
+          </Box>
           {children}
           {policy && (
-            <div className="auth-form__policy">
+            <Box className="auth-form-policy">
               By clicking <b>"{button}"</b> you're agreeing to our Terms of Service, Privacy Policy and Cookie Policy.
-            </div>
+            </Box>
           )}
-        </div>
+        </Box>
       </main>
-      <footer className="auth-wrapper__footer">
+      <footer className="auth-form-footer">
         Privacy Policy | Security Policy | Copyright &#169; 2021
       </footer>
-    </div>
+    </Box>
   );
 };
 

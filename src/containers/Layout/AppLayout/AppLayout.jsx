@@ -1,132 +1,119 @@
 import { useState } from 'react';
-import clsx from 'clsx';
 import { useNavigate } from "react-router-dom";
 import {
+  Box,
   IconButton,
   Menu,
   MenuItem,
-  AppBar,
+  // AppBar,
   Toolbar,
-  Drawer,
+  // Drawer,
   Divider,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
-} from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import ChatIcon from '@material-ui/icons/Chat';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import SettingsIcon from '@material-ui/icons/Settings';
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
-import MailOutlineIcon from '@material-ui/icons/MailOutline';
-import GetAppIcon from '@material-ui/icons/GetApp';
+  Typography,
+} from '@mui/material';
+import ListItemButton from '@mui/material/ListItemButton';
+import CssBaseline from '@mui/material/CssBaseline';
+import MuiDrawer from '@mui/material/Drawer';
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
+import { styled, useTheme, Theme, CSSObject } from '@mui/styles';
+// import ChatIcon from '@mui/icons-material/Chat';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import SettingsIcon from '@mui/icons-material/Settings';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import MailOutlineIcon from '@mui/icons-material/MailOutline';
+import VideoLibraryIcon from '@mui/icons-material/VideoLibrary';
+import GetAppIcon from '@mui/icons-material/GetApp';
+import MenuIcon from '@mui/icons-material/Menu';
+// import InboxIcon from '@mui/icons-material/MoveToInbox';
+// import MailIcon from '@mui/icons-material/Mail';
 import { signOut } from '../../../services/authn';
 import routes from '../../../constants/routes';
 import Helmet from 'react-helmet';
 
-import './AppLayout.scss';
-
-const iconButtonStyles = makeStyles(() => ({
-  root: {
-    color: '#fff',
-    '& .MuiSvgIcon-root': {
-      width: '40px',
-      height: '40px',
-    },
-  },
-}));
+import classes from './AppLayout.styles';
 
 const drawerWidth = 240;
-const drawerStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
+const openedMixin = (theme) => {
+  return ({
+  width: drawerWidth,
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: 'hidden',
+})};
+
+const closedMixin = (theme) => ({
+  transition: theme.transitions.create('width', {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: 'hidden',
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up('sm')]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
   },
-  appBar: {
-    // border: '1px solid red',
-    // position: 'static',
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-  },
-  appBarShift: {
+});
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'flex-end',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+}));
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== 'open',
+})(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(['width', 'margin'], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-  },
-  // toolbar: {
-  //   display: 'flex',
-  //   justifyContent: 'space-between',
-  //   alignItems: 'center',
-  // },
-  menuButton: {
-    marginRight: 36,
-  },
-  hide: {
-    display: 'none',
-  },
-  drawer: {
+  }),
+}));
+
+const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
-  },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
+    boxSizing: 'border-box',
+    ...(open && {
+      ...openedMixin(theme),
+      '& .MuiDrawer-paper': openedMixin(theme),
     }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create('width', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
+    ...(!open && {
+      ...closedMixin(theme),
+      '& .MuiDrawer-paper': closedMixin(theme),
     }),
-    overflowX: 'hidden',
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up('sm')]: {
-      width: theme.spacing(9) + 1,
-    },
-  },
-  toolbar: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    position: 'absolute',
-    top: '64px',
-    bottom: '64px',
-    left: '73px',
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    width: 'calc(100% - 73px)',
-    overflow: 'auto',
-    border: '1px solid red',
-  },
-}));
+  }),
+);
 
 const AppLayout = props => {
   const { setUserData, user, children, pageTitle } = props;
 
   const theme = useTheme();
-  const iconButtonClasses = iconButtonStyles();
-  const drawerClasses = drawerStyles();
 
   const navigate = useNavigate();
   const [anchorMenu, setAnchorMenu] = useState(null);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   const handleMenuOpen = (event) => {
     setAnchorMenu(event.currentTarget);
@@ -137,10 +124,12 @@ const AppLayout = props => {
   };
 
   const handleDrawerOpen = () => {
+    debugger
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
+    debugger
     setOpen(false);
   };
 
@@ -159,13 +148,16 @@ const AppLayout = props => {
     navigate(routes.LOGIN);
 
     signOut({ email: user.email }).then(res => {
-      const { data } = res;
-      setUserData(null);
-      // console.log(data);s
-      // debugger
       // TODO: update user and clear access token
-      // do something on signout success???
+      // const { data } = res;
+      setUserData(null);
     });
+  }
+
+  const onSideNavClick = (e, text) => {
+    if (text === 'Video') {
+      navigate(routes.VIDEO);
+    }
   }
 
   return (
@@ -173,95 +165,117 @@ const AppLayout = props => {
     <Helmet>
       <title>{pageTitle}</title>
       </Helmet>
-      <div className="app-layout">
-        <AppBar
-          className={clsx(drawerClasses.appBar, {
-            [drawerClasses.appBarShift]: open,
-          })}
-        >
-          <Toolbar className={drawerClasses.toolbar}>
+      <Box sx={{ ...classes.appLayout }}>
+        <CssBaseline />
+        <AppBar position="fixed" open={open} sx={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Toolbar>
             <IconButton
+              color="inherit"
+              aria-label="open drawer"
               onClick={handleDrawerOpen}
-              className={iconButtonClasses.root}
+              edge="start"
+              sx={{
+                marginRight: 5,
+                ...(open && { display: 'none' }),
+              }}
             >
-              <ChatIcon />
+              <MenuIcon />
             </IconButton>
+            <Typography variant="h6" noWrap component="div">
+              Mini variant drawer
+            </Typography>
+          </Toolbar>
+          <Toolbar>
             <IconButton
-              className={iconButtonClasses.root}
+              className="profile-icon-button"
               onClick={handleMenuOpen}
             >
               <AccountCircleIcon />
             </IconButton>
-            <Menu
-              id="profile-menu"
-              anchorEl={anchorMenu}
-              keepMounted
-              open={Boolean(anchorMenu)}
-              onClose={handleMenuClose}
-            >
-              <MenuItem onClick={onSettings}>Settings</MenuItem>
-              <MenuItem>Account</MenuItem>
-              <MenuItem onClick={onProfile}>Profile</MenuItem>
-              <MenuItem onClick={onSignOut}>Sign Out</MenuItem>
-            </Menu>
           </Toolbar>
         </AppBar>
-        <Drawer
-          variant="permanent"
-          className={clsx(drawerClasses.drawer, {
-            [drawerClasses.drawerOpen]: open,
-            [drawerClasses.drawerClose]: !open,
-          })}
-          classes={{
-            paper: clsx({
-              [drawerClasses.drawerOpen]: open,
-              [drawerClasses.drawerClose]: !open,
-            }),
-          }}
-        >
-          <div className={drawerClasses.toolbar}>
+        <Drawer variant="permanent" open={open}>
+          <DrawerHeader>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
             </IconButton>
-          </div>
+          </DrawerHeader>
           <Divider />
           <List>
-            {/* <ListItem>
-              <ListItemIcon><GetAppIcon /></ListItemIcon>
-              <ListItemText>Welcome</ListItemText>
-            </ListItem> */}
-            <ListItem>
-              <ListItemIcon><ShoppingCartIcon /></ListItemIcon>
-              <ListItemText>Purchase</ListItemText>
-            </ListItem>
-            <ListItem>
-              <ListItemIcon><GetAppIcon /></ListItemIcon>
-              <ListItemText>Downloads</ListItemText>
-            </ListItem>
-            <ListItem>
-              <ListItemIcon><SettingsIcon /></ListItemIcon>
-              <ListItemText>App Settings</ListItemText>
-            </ListItem>
-            <ListItem>
-              <ListItemIcon><HelpOutlineIcon /></ListItemIcon>
-              <ListItemText>Support</ListItemText>
-            </ListItem>
-            <ListItem>
-              <ListItemIcon><MailOutlineIcon /></ListItemIcon>
-              <ListItemText>Contact Us</ListItemText>
-            </ListItem>
+            {['Welcome', 'Purchase', 'Downloads', 'App Settings'].map((text, index) => (
+              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
+                  }}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {index === 0 && <GetAppIcon />}
+                    {index === 1 && <ShoppingCartIcon />}
+                    {index === 2 && <GetAppIcon />}
+                    {index === 3 && <SettingsIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {['Video', 'Support', 'Contact Us'].map((text, index) => (
+              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                <ListItemButton
+                  sx={{
+                    minHeight: 48,
+                    justifyContent: open ? 'initial' : 'center',
+                    px: 2.5,
+                  }}
+                  onClick={(e) => onSideNavClick(e, text)}
+                >
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : 'auto',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {index === 0 && <VideoLibraryIcon />}
+                    {index === 1 && <HelpOutlineIcon />}
+                    {index === 2 && <MailOutlineIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+                </ListItemButton>
+              </ListItem>
+            ))}
           </List>
         </Drawer>
-        <main className={drawerClasses.content}>
-          {/* <div className={drawerClasses.toolbar} /> */}
-          {/* <div className="app-layout__content"> */}
-            {children}
-          {/* </div> */}
+        <main className="app-content">
+          {children}
         </main>
-        <footer className="app-layout__footer">
+        <footer className="app-footer">
           {/* footer */}
         </footer>
-      </div>
+      </Box>
+      <Menu
+        id="profile-menu"
+        anchorEl={anchorMenu}
+        keepMounted
+        open={Boolean(anchorMenu)}
+        onClose={handleMenuClose}
+      >
+        <MenuItem onClick={onSettings}>Settings</MenuItem>
+        <MenuItem>Account</MenuItem>
+        <MenuItem onClick={onProfile}>Profile</MenuItem>
+        <MenuItem onClick={onSignOut}>Sign Out</MenuItem>
+      </Menu>
     </>
   );
 };

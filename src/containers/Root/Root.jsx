@@ -1,6 +1,6 @@
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import { ThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider } from '@mui/styles';
 
 import theme from '../../styles/theme';
 import Router from '../Router';
