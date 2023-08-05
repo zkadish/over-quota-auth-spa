@@ -55,7 +55,7 @@ const AuthLayout = props => {
       </header>
       <main className="authLayout-main">
         <Box className="auth-form">
-          <Box className="auth-form-logo">OverQuota</Box>
+          <Box className="auth-form-logo">Skill Up</Box>
           <Box className="auth-form-message">
             <Box>{title}</Box>
             <Box>{message}</Box>

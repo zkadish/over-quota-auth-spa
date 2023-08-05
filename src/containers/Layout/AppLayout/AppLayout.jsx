@@ -113,7 +113,7 @@ const AppLayout = props => {
 
   const navigate = useNavigate();
   const [anchorMenu, setAnchorMenu] = useState(null);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const handleMenuOpen = (event) => {
     setAnchorMenu(event.currentTarget);
@@ -124,12 +124,10 @@ const AppLayout = props => {
   };
 
   const handleDrawerOpen = () => {
-    debugger
     setOpen(true);
   };
 
   const handleDrawerClose = () => {
-    debugger
     setOpen(false);
   };
 
@@ -182,7 +180,7 @@ const AppLayout = props => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              Mini variant drawer
+              Skill Up
             </Typography>
           </Toolbar>
           <Toolbar>
