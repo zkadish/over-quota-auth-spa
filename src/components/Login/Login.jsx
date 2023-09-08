@@ -89,7 +89,6 @@ const Login = props => {
 
       if (res.error) throw res;
       if (status === 200 && data.authenticated) {
-        // TODO: after successful login clear cookie so that a new one gets created.
         setUserData(data.user);
         navigate(routes.WELCOME);
       }

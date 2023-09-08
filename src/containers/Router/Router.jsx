@@ -10,6 +10,7 @@ import ForgotPassword from '../../components/ForgotPassword';
 
 import Welcome from '../../containers/Welcome';
 import Video from '../../containers/Video';
+import ServerSideEvents from '../../containers/ServerSideEvents';
 import UserProfile from '../../containers/UserProfile';
 import UserSettings from '../../containers/UserSettings';
 import GoogleCalendarAuth from '../../containers/GoogleCalendarAuth';
@@ -28,6 +29,7 @@ const Router = () => {
       <Route exact path={routes.FORGOT_PASSWORD} element={<ForgotPassword />} />
       <Route exact path={routes.WELCOME} element={<Welcome />} />
       <Route exact path={routes.VIDEO} element={<Video />} />
+      <Route exact path={routes.SERVER_SIDE_EVENTS} element={<ServerSideEvents />} />
       <Route exact path={routes.USER_PROFILE} element={<UserProfile />} />
       <Route exact path={routes.USER_SETTINGS} element={<UserSettings />} />
       <Route exact path={routes.GOOGLE_CALENDAR_AUTH} element={<GoogleCalendarAuth />} />

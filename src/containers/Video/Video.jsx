@@ -19,6 +19,13 @@ function Video() {
   const playerRef = useRef(null);
 
   const videoJsOptions = {
+    html5: {
+      vhs: {
+        overrideNative: true
+      },
+      nativeAudioTracks: false,
+      nativeVideoTracks: false
+    },
     autoplay: false,
     controls: true,
     responsive: true,
@@ -31,7 +38,7 @@ function Video() {
     controlBar: {
       playToggle: true,
       volumePanel: {
-          inline: false,
+        inline: false,
       },
       volumeMenuButton: true,
       currentTimeDisplay: true,
@@ -46,10 +53,29 @@ function Video() {
     },
     // },
     sources: [{
-      src: 'https://dash.akamaized.net/dash264/TestCasesIOP33/adapatationSetSwitching/5/manifest.mpd',
+      // src: 'http://d3rlna7iyyu8wu.cloudfront.net/skip_armstrong/skip_armstrong_multi_language_subs.m3u8',  // blocked by cors
+      // src: 'http://d3rlna7iyyu8wu.cloudfront.net/skip_armstrong/skip_armstrong_multichannel_subs.m3u8', // blocked by cors
+      // src: 'http://d3rlna7iyyu8wu.cloudfront.net/skip_armstrong/skip_armstrong_stereo_subs.m3u8', // blocked by cors
+      // src: 'https://moctobpltc-i.akamaihd.net/hls/live/571329/eight/playlist.m3u8',
+      // src: 'https://cph-p2p-msl.akamaized.net/hls/live/2000341/test/master.m3u8',
+      // src: 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.mp4/.m3u8',
+      // src: 'https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8',
+      // src: 'https://devstreaming-cdn.apple.com/videos/streaming/examples/img_bipbop_adv_example_fmp4/master.m3u8',
+      // src: 'https://mtoczko.github.io/hls-test-streams/test-gap/playlist.m3u8',
+      // src: 'https://mtoczko.github.io/hls-test-streams/test-gap-audio-video/playlist.m3u8',
+      // src: 'https://diceyk6a7voy4.cloudfront.net/e78752a1-2e83-43fa-85ae-3d508be29366/hls/fitfest-sample-1_Ott_Hls_Ts_Avc_Aac_16x9_1280x720p_30Hz_6.0Mbps_qvbr.m3u8',
+      src: 'http://sample.vodobox.net/skate_phantom_flex_4k/skate_phantom_flex_4k.m3u8',
+      // src: 'https://d1v1s2of9ivmbp.cloudfront.net/Multi_Audio/hls_v3_10m/Pukar/index.m3u8',
+      type: 'application/x-mpegURL',
+      // src: 'https://livesim.dashif.org/livesim/chunkdur_1/ato_7/testpic4_8s/Manifest.mpd',
+      // src: 'https://dash.akamaized.net/dash264/TestCasesUHD/2b/11/MultiRate.mpd',
+      // src: 'https://dash.akamaized.net/dash264/TestCasesIOP33/adapatationSetSwitching/5/manifest.mpd',
+      // src: 'https://dash.akamaized.net/dash264/TestCases/2c/qualcomm/1/MultiResMPEG2.mpd',
+      // src: 'https://dash.akamaized.net/dash264/TestCasesHD/2b/qualcomm/1/MultiResMPEG2.mpd',
+      // src: 'http://ftp.itec.aau.at/datasets/DASHDataset2014/BigBuckBunny/1sec/BigBuckBunny_1s_onDemand_2014_05_09.mpd',
+      // src: 'https://media.axprod.net/TestVectors/v7-Clear/Manifest_1080p.mpd',
+      // type: 'application/dash+xml',
       // type: 'video/mp4',
-      // type: 'application/x-mpegURL',
-      type: 'application/dash+xml',
     }]
   };
 
@@ -59,6 +85,8 @@ function Video() {
     // You can handle player events here, for example:
     player.on('loadedmetadata', () => {
       console.log('videojs player has loaded video metadata');
+      const audio = player.audioTracks();
+      debugger;
       // look for audio and text tracks when this event executes
     });
 
