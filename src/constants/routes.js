@@ -10,6 +10,7 @@ const routes = {
   USER_PROFILE: '/app/user-profile',
   USER_SETTINGS: '/app/user-settings',
   VIDEO: '/app/video',
+  SERVER_SIDE_EVENTS: '/app/events',
   GOOGLE_CALENDAR_AUTH: '/google/calendar/auth',
 };
 
