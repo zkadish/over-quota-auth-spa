@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom';
 import {
   Box,
@@ -13,6 +14,7 @@ import Switch from '../Switch';
 import routes from '../../constants/routes';
 import { registerUser } from '../../services/authn';
 import { isValidEmail } from '../../constants/validators';
+import { setUser } from '../../features/authnSlice';
 
 import classes from './RegisterUser.styles';
 
@@ -21,10 +23,9 @@ const constants = {
   message: `It's best to register with your work email.`,
 };
 
-const RegisterUser = props => {
-  const { setUserData } = props;
-
+const RegisterUser = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [isValid, setIsValid] = useState(false);
   const [error, setError] = useState(false);
@@ -54,7 +55,7 @@ const RegisterUser = props => {
 
       if (res.error) throw res;
       if (status === 200) {
-        setUserData(data.user);
+        dispatch(setUser(data.user));
         navigate(routes[data.redirect]);
       }
     }).catch(error => {

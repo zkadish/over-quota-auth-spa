@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   FormControl,
   OutlinedInput,
@@ -20,6 +21,7 @@ import AuthLayout from '../../containers/Layout/AuthLayout';
 import routes from '../../constants/routes';
 import { createPassword } from '../../services/authn';
 import { validatePassword } from '../../constants/validators';
+import { setUser } from '../../features/authnSlice';
 
 import classes from './CreatePassword.styles.js';
 
@@ -37,10 +39,11 @@ const constants = {
 };
 
 // TODO: offer to create a password witch will be sent to the email they entered
-const CreatePassword = props => {
-  const { user } = props;
-
+const CreatePassword = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.authn.user)
+
   const [values, setValues] = useState({
     password: '',
     confirm: '',
@@ -64,7 +67,6 @@ const CreatePassword = props => {
   const input = useRef(null);
 
   const confirmPassword = (value, field) => {
-    // debugger
     const error = value !== values[field];
       setErrors({
         ...errors,
@@ -114,7 +116,6 @@ const CreatePassword = props => {
   const onCreatePassword = () => {
 
     setDisabled(true);
-
     createPassword({
       email: user.email,
       password: values.password,
@@ -123,7 +124,7 @@ const CreatePassword = props => {
       const { data, status } = res;
       if (res.error) throw res;
       if (status === 200) {
-        // setUserData(data.user);
+        dispatch(setUser(data.user));
         navigate(routes[data.redirect]);
       }
     }).catch(error => {

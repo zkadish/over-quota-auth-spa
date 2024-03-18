@@ -1,4 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
+import { configureStore } from '@reduxjs/toolkit'
 import thunk from 'redux-thunk';
 // import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
@@ -7,7 +8,7 @@ import * as appActions from '../actions/app';
 
 const rootReducer = createRootReducer();
 
-const configureStore = initialState => {
+const store = initialState => {
   // Redux Configuration
   const middleware = [];
   const enhancers = [];
@@ -63,6 +64,6 @@ const configureStore = initialState => {
   return store;
 }
 
-const Store = { configureStore }
+// const Store = { configureStore }
 
-export default Store;
+export default store;

@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
   Box,
@@ -17,6 +18,7 @@ import Switch from '../Switch';
 import routes from '../../constants/routes';
 import { login } from '../../services/authn';
 import { isValidEmail } from '../../constants/validators';
+import { setUser } from '../../features/authnSlice';
 
 import classes from './Login.styles';
 
@@ -25,10 +27,10 @@ const constants = {
   // message: `Please create a strong password.`,
 };
 
-const Login = props => {
-  const { user, setUserData } = props;
-
+const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.authn.user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -89,7 +91,7 @@ const Login = props => {
 
       if (res.error) throw res;
       if (status === 200 && data.authenticated) {
-        setUserData(data.user);
+        dispatch(setUser(data.user));
         navigate(routes.WELCOME);
       }
     }).catch(error => {

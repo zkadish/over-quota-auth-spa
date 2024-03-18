@@ -48,7 +48,7 @@ const VideoJsPlayer = (props) => {
       // videoElement.classList.add('vjs-big-play-centered');
       videoRef.current.appendChild(videoElement);
 
-      videojs.setFormatTime((seconds, _) => convertSecondsToTimecode(seconds));
+      videojs.time.setFormatTime((seconds, _) => convertSecondsToTimecode(seconds));
 
       const player = playerRef.current = videojs(videoElement, options, () => {
         console.log('player is ready');

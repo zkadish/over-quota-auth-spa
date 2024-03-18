@@ -42,5 +42,5 @@ The idea here is have all the basic stuff Authn and Authz for starting applicati
 
 ### TODOs
 
-- split out boiler plate into a seperate repo before this project gets very specific
+- split out boiler plate into a separate repo before this project gets very specific
   

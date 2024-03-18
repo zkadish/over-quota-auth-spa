@@ -52,17 +52,32 @@ router.post('/sign-out', function(req, res, next) {
 
 /* POST forgot password */
 router.post('/forgot-password', function(req, res, next) {
-  res.send('test routes');
+  // res.send('test routes');
+  axios.post('http://localhost:7777/api/auth/forgot-password', req.body).then((response) => {
+    res.send(response.data);
+  }).catch((err) => {
+    console.error(err);
+  })
 });
 
 /* GET validate reset */
 router.get('/validate-reset/:token', function(req, res, next) {
-  res.send('test routes');
+  // res.send('test routes');
+  axios.get('http://localhost:7777/api/auth/validate-reset/:token').then((response) => {
+    res.send(response.data);
+  }).catch((err) => {
+    console.error(err);
+  })
 });
 
 /* POST reset password */
 router.post('/reset-password/:token', function(req, res, next) {
   res.send('test routes');
+  axios.post('http://localhost:7777/api/auth/reset-password/:token', req.body).then((response) => {
+    res.send(response.data);
+  }).catch((err) => {
+    console.error(err);
+  })
 });
 
 /* GET authn */
