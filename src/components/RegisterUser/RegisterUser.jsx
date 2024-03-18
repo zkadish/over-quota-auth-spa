@@ -52,7 +52,6 @@ const RegisterUser = () => {
 
     registerUser({ email: email, emailLists }).then(res => {
       const { data, status } = res;
-
       if (res.error) throw res;
       if (status === 200) {
         dispatch(setUser(data.user));
