@@ -3,15 +3,6 @@ import theme from '../../../styles/theme';
 
 const classes = {
   appLayout: {
-    display: 'flex',
-    // border: '1px solid red',
-    // '&__header': {
-    //   display: 'flex',
-    //   justifyContent: 'space-between',
-    //   height: '64px',
-    //   backgroundColor: colors.BACKGROUND_PRIMARY_DARK,
-    //   color: 'white',
-    // }
     '.profile-icon-button': {
       color: '#fff',
       '& .MuiSvgIcon-root': {
