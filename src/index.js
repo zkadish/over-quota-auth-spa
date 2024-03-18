@@ -1,18 +1,21 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import Root from './containers/Root';
-import { configureStore } from './store/configStore';
-import './index.scss';
+import configureAppStore from './store/configStore';
+
+import 'html5-boilerplate/dist/css/normalize.css';
+import 'html5-boilerplate/dist/css/main.css';
 
 import reportWebVitals from './reportWebVitals';
 
-const store = configureStore();
+const store = configureAppStore();
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(
   <React.StrictMode>
     <Root store={store} />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

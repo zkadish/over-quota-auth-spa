@@ -1,15 +1,16 @@
 import { combineReducers } from 'redux';
-import authn from './authn';
-import app from './app';
+import authnReducer from '../features/authnSlice';
+// import authn from './authn';
+// import app from './app';
 // import builder from './builder';
 // import nav from './nav';
 // import notifications from './notifications';
 // import winCallEvent from './winCallEvent';
 
-export default function createRootReducer() {
+export default function rootReducer() {
   return combineReducers({
-    authn,
-    app,
+    authn: authnReducer,
+    // app,
     // builder,
     // nav,
     // notifications,

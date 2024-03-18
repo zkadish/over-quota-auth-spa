@@ -16,35 +16,41 @@ switch(process.env.REACT_APP_ENV) {
     domain = '';
 }
 
-const getGoogleCalendarAuthUrl = async () => {
-  debugger
+const getAwsLambdaFunctions = async () => {
   try {
     const res = await axios.get(
-      `${domain}/api/google/v1/calendar/auth`,
+      `${domain}/test/hello-lambda`,
     );
-    
     return res;
   } catch (error) {
     console.error(error);
-    debugger
     return { error };
   }
 }
 
-const postGoogleCalendarAuthCode = async (reqBody) => {
-  debugger
+const listLambdaFunctions = async () => {
+  try {
+    const res = await axios.get(
+      `${domain}/lambdas/list-functions`,
+    );
+    return res.data;
+  } catch (error) {
+    console.error(error);
+    return { error };
+  }
+}
+
+const invokeLambdaFunction = async (body) => {
   try {
     const res = await axios.post(
-      `${domain}/api/google/v1/calendar/auth`,
-      reqBody,
+      `${domain}/lambdas/invoke-function`,
+      body,
     );
-
-    return res;
+    return res.data;
   } catch (error) {
     console.error(error);
-    debugger
     return { error };
   }
 }
 
-export { getGoogleCalendarAuthUrl, postGoogleCalendarAuthCode };
+export { getAwsLambdaFunctions, listLambdaFunctions, invokeLambdaFunction };

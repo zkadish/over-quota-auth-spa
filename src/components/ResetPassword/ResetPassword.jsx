@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Box,
   FormControl,
@@ -22,6 +23,7 @@ import AuthLayout from '../../containers/Layout/AuthLayout';
 import routes from '../../constants/routes';
 import { resetPassword, validateReset } from '../../services/authn';
 import { validatePassword } from '../../constants/validators';
+import { setUser } from '../../features/authnSlice';
 
 import classes from './ResetPassword.styles.js';
 
@@ -40,10 +42,12 @@ const constants = {
 };
 
 // TODO: offer to create a password witch will be sent to the email they entered
-const ResetPassword = props => {
-  const { user, setUserData } = props;
+const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.authn.user)
+
   const [values, setValues] = useState({
     password: '',
     confirm: '',
@@ -69,9 +73,7 @@ const ResetPassword = props => {
     validateReset(token).then(res => {
       const { data, error } = res;
       if (error) throw error;
-      console.log(res);
-      debugger
-      setUserData(data.user);
+      dispatch(setUser(data.user));
     }).catch(error => {
       console.log(error);
       debugger
@@ -131,10 +133,9 @@ const ResetPassword = props => {
       password: values.password,
     }).then(res => {
       const { data, status } = res;
-      debugger
       if (res.error) throw res;
       if (status === 200) {
-        setUserData(data.user);
+        dispatch(setUser(data.user));
         navigate(routes[data.redirect]); // LOGIN
       }
     }).catch(error => {

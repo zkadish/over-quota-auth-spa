@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
 import {
   Box,
   IconButton,
@@ -35,6 +36,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 // import MailIcon from '@mui/icons-material/Mail';
 import { signOut } from '../../../services/authn';
 import routes from '../../../constants/routes';
+import { setUser } from '../../../features/authnSlice';
 import Helmet from 'react-helmet';
 
 import classes from './AppLayout.styles';
@@ -109,11 +111,14 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 const AppLayout = props => {
-  const { setUserData, user, children, pageTitle } = props;
+  const { children, pageTitle } = props;
 
   const theme = useTheme();
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const user = useSelector((state) => state.authn.user);
+
   const [anchorMenu, setAnchorMenu] = useState(null);
   const [open, setOpen] = useState(false);
 
@@ -146,11 +151,10 @@ const AppLayout = props => {
   const onSignOut = () => {
     setAnchorMenu(null);
     navigate(routes.LOGIN);
-
     signOut({ email: user.email }).then(res => {
       // TODO: update user and clear access token
       // const { data } = res;
-      setUserData(null);
+      dispatch(setUser(null));
     });
   }
 
